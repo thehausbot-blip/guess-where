@@ -88,7 +88,7 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
             placeholder="Enter a country..."
             disabled={disabled}
             name="guess-input-field"
-            autoComplete="off"
+            autoComplete="one-time-code"
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck={false}

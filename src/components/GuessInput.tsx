@@ -99,7 +99,7 @@ export function GuessInput({ cities, onGuess, disabled, guessedCities, placehold
             placeholder={placeholder || (entityName ? `Enter a state or territory...` : t('game.enterCity'))}
             disabled={disabled}
             name="guess-input-field"
-            autoComplete="off"
+            autoComplete="one-time-code"
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck={false}
