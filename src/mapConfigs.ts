@@ -35,6 +35,27 @@ export interface MapConfig {
 }
 
 export const MAP_CONFIGS: Record<string, MapConfig> = {
+  'world-countries': {
+    id: 'world-countries',
+    name: 'World',
+    emoji: '🌍',
+    center: [20, 0],
+    zoom: 2,
+    minZoom: 1,
+    maxZoom: 6,
+    bounds: [[-90, -180], [90, 180]],
+    cityDataFile: '',
+    outlineFile: '',
+    boundaryFile: null,
+    placeholder: 'Enter a country...',
+    entityName: 'countries',
+    welcomeText: 'Welcome, Explorer!',
+    distanceUnit: 'km',
+    distanceThresholds: { hot: 1000, warm: 3000, medium: 6000, cool: 10000 },
+    difficultyThresholds: { veryEasy: 0, easy: 0, hard: 0, insane: 0 },
+    dailyTiers: ['insane'],
+    storagePrefix: 'world-countries',
+  },
   usa: {
     id: 'usa',
     name: 'United States',
@@ -146,7 +167,7 @@ export { CONTINENTS, WORLD_COUNTRIES };
 export const DEFAULT_MAP = 'texas';
 
 // Featured maps shown as big cards on landing
-export const FEATURED_MAPS = ['texas', 'puertoRico', 'usa'];
+export const FEATURED_MAPS = ['world-countries', 'texas', 'puertoRico', 'usa'];
 
 export function getMapConfig(id: string): MapConfig {
   return MAP_CONFIGS[id] || MAP_CONFIGS[DEFAULT_MAP];

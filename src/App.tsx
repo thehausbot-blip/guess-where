@@ -16,6 +16,7 @@ import { LevelUpModal } from './components/LevelUpModal';
 import { DailyReviewModal } from './components/DailyReviewModal';
 import { ProfileButton } from './components/ProfileButton';
 import { LandingPage } from './components/LandingPage';
+import { WorldGameView } from './components/WorldGameView';
 import type { Difficulty, GameMode } from './types';
 import { TIER_LABELS } from './types';
 import { generateShareText, generateDailyShareText, getDayNumber } from './utils';
@@ -85,6 +86,10 @@ function App() {
         onAvatarChange={handleSaveAvatar}
       />
     );
+  }
+
+  if (currentMapId === 'world-countries') {
+    return <WorldGameView onBackToLanding={() => setCurrentMapId(null)} />;
   }
 
   return (
