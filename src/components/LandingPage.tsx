@@ -27,6 +27,7 @@ interface LandingPageProps {
   playerName: string;
   playerAvatar: string;
   pendingMapId?: string | null;
+  onAvatarChange?: (avatar: string) => void;
 }
 
 function HowToPlayInline({ onBack }: { onBack: () => void }) {
@@ -89,6 +90,52 @@ function HowToPlayInline({ onBack }: { onBack: () => void }) {
   );
 }
 
+function ProfileSetup({ currentAvatar, onSave }: { currentAvatar: string; onSave: (avatar: string) => void }) {
+  const [avatar, setAvatar] = useState(currentAvatar);
+  const { t } = useI18n();
+
+  return (
+    <div className="max-w-sm mx-auto">
+      <h2 className="text-white text-xl font-bold mb-2 text-center">✨ Welcome!</h2>
+      <p className="text-blue-200/60 text-sm mb-4 text-center">
+        Customize your profile before playing
+      </p>
+
+      {/* Language selector */}
+      <div className="mb-4">
+        <LanguageSelector />
+      </div>
+
+      <div className="mb-4">
+        <label className="text-blue-200 text-sm font-medium mb-2 block">{t('name.pickAvatar')}</label>
+        <div className="grid grid-cols-7 gap-2 max-h-48 overflow-y-auto">
+          {AVATAR_OPTIONS.map(emoji => (
+            <button
+              key={emoji}
+              type="button"
+              onClick={() => setAvatar(emoji)}
+              className={`text-2xl p-2 rounded-lg transition-all ${
+                avatar === emoji
+                  ? 'bg-red-600 ring-2 ring-red-400 scale-110'
+                  : 'bg-white/10 hover:bg-white/20'
+              }`}
+            >
+              {emoji}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <button
+        onClick={() => onSave(avatar)}
+        className="w-full px-6 py-3 rounded-lg font-bold bg-red-600 text-white hover:bg-red-500 text-lg"
+      >
+        🎮 Let&apos;s Play!
+      </button>
+    </div>
+  );
+}
+
 function GuestSetup({ onSave, onBack }: { onSave: (name: string, avatar: string) => void; onBack: () => void }) {
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('🤠');
@@ -106,6 +153,11 @@ function GuestSetup({ onSave, onBack }: { onSave: (name: string, avatar: string)
       <p className="text-blue-200/60 text-sm mb-4 text-center">
         {t('landing.guestStatsLocal')}
       </p>
+
+      {/* Language selector */}
+      <div className="mb-4">
+        <LanguageSelector />
+      </div>
 
       <div className="mb-4">
         <label className="text-blue-200 text-sm font-medium mb-2 block">{t('name.pickAvatar')}</label>
@@ -156,8 +208,8 @@ function GuestSetup({ onSave, onBack }: { onSave: (name: string, avatar: string)
   );
 }
 
-export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmailSignIn, onEmailSignUp, onLogout, isFirebaseConfigured, isSignedIn, playerName, playerAvatar, pendingMapId }: LandingPageProps) {
-  const [page, setPage] = useState<'main' | 'howto' | 'guest'>('main');
+export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmailSignIn, onEmailSignUp, onLogout, isFirebaseConfigured, isSignedIn, playerName, playerAvatar, pendingMapId, onAvatarChange }: LandingPageProps) {
+  const [page, setPage] = useState<'main' | 'howto' | 'guest' | 'profile-setup'>('main');
   const [welcomeIdx, setWelcomeIdx] = useState(0);
   const [fade, setFade] = useState(true);
   const [signingIn, setSigningIn] = useState(false);
@@ -175,12 +227,12 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
   const [expandedContinent, setExpandedContinent] = useState<string | null>(null);
   const isLoggedIn = isSignedIn || !!playerName;
 
-  // Auto-navigate to pending map when user completes sign-in
+  // Auto-navigate to pending map when user completes sign-in (skip if on profile setup)
   useEffect(() => {
-    if (pendingMapId && isLoggedIn && playerName) {
+    if (pendingMapId && isLoggedIn && playerName && page !== 'profile-setup' && page !== 'guest') {
       onSelectMap(pendingMapId);
     }
-  }, [pendingMapId, isLoggedIn, playerName]);
+  }, [pendingMapId, isLoggedIn, playerName, page]);
   const featured = FEATURED_MAPS.map(id => MAP_CONFIGS[id]).filter(Boolean);
   const mapsByRegion = getMapsByRegion();
   const regionOrder = Object.entries(REGIONS).sort((a, b) => a[1].order - b[1].order);
@@ -203,6 +255,7 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
     setSigningIn(true);
     try {
       await onGoogleSignIn();
+      setPage('profile-setup');
     } finally {
       setSigningIn(false);
     }
@@ -212,6 +265,20 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
     return (
       <div className="min-h-screen py-8 px-4">
         <HowToPlayInline onBack={() => setPage('main')} />
+      </div>
+    );
+  }
+
+  if (page === 'profile-setup') {
+    return (
+      <div className="min-h-screen py-8 px-4 flex items-center justify-center">
+        <ProfileSetup
+          currentAvatar={playerAvatar || '🤠'}
+          onSave={(avatar) => {
+            onAvatarChange?.(avatar);
+            if (pendingMapId) { onSelectMap(pendingMapId); } else { setPage('main'); }
+          }}
+        />
       </div>
     );
   }
@@ -283,6 +350,7 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
                     } else {
                       await onEmailSignIn?.(email, password);
                     }
+                    setPage('profile-setup');
                   } catch (err: any) {
                     const code = err?.code || '';
                     if (code === 'auth/user-not-found' || code === 'auth/invalid-credential') setEmailError('Account not found. Try signing up.');

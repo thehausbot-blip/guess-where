@@ -77,6 +77,7 @@ function App() {
         playerName={playerName}
         playerAvatar={playerAvatar}
         pendingMapId={currentMapId}
+        onAvatarChange={handleSaveAvatar}
       />
     );
   }
