@@ -93,7 +93,7 @@ export function useGame(mapConfig: MapConfig): UseGameReturn {
         for (const city of cities) {
           // Remove ", State" suffix and "city/town/village/CDP" labels
           city.name = city.name
-            .replace(/\s+(city|town|village|CDP|borough|municipality),?\s*.*/i, '')
+            .replace(/\s+(city|town|village|CDP|borough|municipality),\s+.*/i, '')
             .replace(/,\s+\w[\w\s]*$/, '')
             .trim();
         }
@@ -115,7 +115,7 @@ export function useGame(mapConfig: MapConfig): UseGameReturn {
                   || (feature.properties as { NAME?: string })?.NAME;
                 if (name) {
                   name = name
-                    .replace(/\s+(city|town|village|CDP|borough|municipality),?\s*.*/i, '')
+                    .replace(/\s+(city|town|village|CDP|borough|municipality),\s+.*/i, '')
                     .replace(/,\s+\w[\w\s]*$/, '')
                     .trim();
                   const key = name.toLowerCase();

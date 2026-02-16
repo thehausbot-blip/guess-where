@@ -60,7 +60,7 @@ export function GameMap({ config, guesses, showMystery, tierWinners = [], distUn
               || (feature.properties as { NAME?: string })?.NAME;
             if (name) {
               name = name
-                .replace(/\s+(city|town|village|CDP|borough|municipality),?\s*.*/i, '')
+                .replace(/\s+(city|town|village|CDP|borough|municipality),\s+.*/i, '')
                 .replace(/,\s+\w[\w\s]*$/, '')
                 .trim();
               const key = name.toLowerCase();
