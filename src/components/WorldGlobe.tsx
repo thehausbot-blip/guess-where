@@ -166,6 +166,9 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
     return 'rgba(0,0,0,0)';
   }, [guessMap, targetFound, targetCountryIso, getCountryIso]);
 
+  // Force globe to re-render polygons when guesses change by creating a new array reference
+  const polygonsData = useMemo(() => [...countries], [countries, guesses]);
+
   const polygonSideColor = useCallback(() => 'rgba(0,0,0,0)', []);
   const polygonStrokeColor = useCallback(() => 'rgba(255,255,255,0.3)', []);
 
@@ -195,7 +198,7 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
           showAtmosphere={true}
           atmosphereColor="#6bb3ff"
           atmosphereAltitude={0.25}
-          polygonsData={countries}
+          polygonsData={polygonsData}
           polygonCapColor={polygonColor}
           polygonSideColor={polygonSideColor}
           polygonStrokeColor={polygonStrokeColor}

@@ -69,6 +69,9 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
   return (
     <div className="w-full max-w-md mx-auto relative">
       <div className="flex gap-2">
+        {/* Hidden fields to absorb iOS AutoFill Contact */}
+        <input type="text" name="fakeUsername" style={{ display: 'none' }} tabIndex={-1} autoComplete="username" />
+        <input type="password" name="fakePassword" style={{ display: 'none' }} tabIndex={-1} autoComplete="current-password" />
         <div className="relative flex-1">
           <input
             ref={inputRef}
