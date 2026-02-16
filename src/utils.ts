@@ -161,10 +161,9 @@ export function getTodaysMysteryCity(
  * Get day number since game launch (Feb 8, 2026)
  */
 export function getDayNumber(): number {
-  const launchDate = new Date('2026-02-08');
-  const today = new Date();
-  const diffTime = today.getTime() - launchDate.getTime();
-  return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+  const launch = Date.UTC(2026, 1, 8); // Feb 8, 2026 UTC
+  const now = Date.now();
+  return Math.floor((now - launch) / (1000 * 60 * 60 * 24)) + 1;
 }
 
 /**
