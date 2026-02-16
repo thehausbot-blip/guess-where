@@ -25,6 +25,7 @@ export { auth, db, isConfigured };
 export async function signInWithGoogle(): Promise<User | null> {
   if (!auth) return null;
   try {
+    googleProvider.setCustomParameters({ prompt: 'select_account' });
     const result = await signInWithPopup(auth, googleProvider);
     return result.user;
   } catch (error) {

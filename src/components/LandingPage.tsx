@@ -356,7 +356,7 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
                     const code = err?.code || '';
                     if (code === 'auth/user-not-found' || code === 'auth/invalid-credential') setEmailError('Account not found. Try signing up.');
                     else if (code === 'auth/wrong-password') setEmailError('Wrong password.');
-                    else if (code === 'auth/email-already-in-use') { setEmailError('This email is linked to a Google account. Use "Sign in with Google" instead.'); return; }
+                    else if (code === 'auth/email-already-in-use') { setEmailMode('signin'); setEmailError('An account with this email already exists. Try signing in.'); return; }
                     else if (code === 'auth/weak-password') setEmailError('Password must be at least 6 characters.');
                     else if (code === 'auth/invalid-email') setEmailError('Invalid email address.');
                     else setEmailError(err?.message || 'Sign-in failed.');
