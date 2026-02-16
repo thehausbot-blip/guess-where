@@ -212,6 +212,11 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
     setDailyResultSaved(true);
   }
 
+  // Compute average guesses from distribution
+  const avgGuesses = stats.gamesWon > 0
+    ? (stats.guessDistribution.reduce((sum, count, i) => sum + count * (i + 1), 0) / stats.gamesWon).toFixed(1)
+    : '—';
+
   const [shareText, setShareText] = useState<string | null>(null);
 
   const handleShare = () => {
@@ -421,6 +426,9 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
                 <p className="text-white">
                   {t('result.championMsg', { count: String(dailyTiers.length), guesses: String(gameState.totalGuesses) })}
                 </p>
+                <p className="text-blue-200/50 text-xs mt-1">
+                  📊 Avg: {avgGuesses} guesses · {stats.gamesWon}/{stats.gamesPlayed} wins
+                </p>
               </>
             ) : gameState.dailyGaveUp ? (
               <>
@@ -429,12 +437,18 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
                   {t('result.reachedTier', { current: String(gameState.tierGuesses.length + 1), total: String(dailyTiers.length) })} •{' '}
                   {t('result.answerWas')} <strong>{gameState.mysteryCity?.name}</strong>
                 </p>
+                <p className="text-blue-200/50 text-xs mt-1">
+                  📊 Avg: {avgGuesses} guesses · {stats.gamesWon}/{stats.gamesPlayed} wins
+                </p>
               </>
             ) : (
               <>
                 <p className="text-2xl mb-2">🎉 {t('result.tierComplete')}</p>
                 <p className="text-white">
                   {t('result.completedTiers', { count: String(gameState.tierGuesses.length), guesses: String(gameState.totalGuesses) })}
+                </p>
+                <p className="text-blue-200/50 text-xs mt-1">
+                  📊 Avg: {avgGuesses} guesses · {stats.gamesWon}/{stats.gamesPlayed} wins
                 </p>
               </>
             )}
@@ -472,12 +486,18 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
                 <p className="text-white">
                   {t('result.found', { city: gameState.mysteryCity?.name || '', count: String(gameState.guesses.length), plural: gameState.guesses.length !== 1 ? 's' : '' })}
                 </p>
+                <p className="text-blue-200/50 text-xs mt-1">
+                  📊 Avg: {avgGuesses} guesses · {stats.gamesWon}/{stats.gamesPlayed} wins
+                </p>
               </>
             ) : (
               <>
                 <p className="text-2xl mb-2">😔 {t('result.gameOver')}</p>
                 <p className="text-white">
                   {t('result.answerWas')} <strong>{gameState.mysteryCity?.name}</strong>
+                </p>
+                <p className="text-blue-200/50 text-xs mt-1">
+                  📊 Avg: {avgGuesses} guesses · {stats.gamesWon}/{stats.gamesPlayed} wins
                 </p>
               </>
             )}
