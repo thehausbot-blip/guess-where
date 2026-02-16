@@ -34,10 +34,12 @@ export function GameMap({ config, guesses, showMystery, tierWinners = [], distUn
   const { t } = useI18n();
   const [outline, setOutline] = useState<GeoJSON.FeatureCollection | null>(null);
   const [boundaries, setBoundaries] = useState<Map<string, CityBoundaryFeature>>(new Map());
+  const [boundaryDupes, setBoundaryDupes] = useState<Map<string, CityBoundaryFeature[]>>(new Map());
 
   useEffect(() => {
     setOutline(null);
     setBoundaries(new Map());
+    setBoundaryDupes(new Map());
     
     fetch(config.outlineFile)
       .then(res => res.json())
@@ -51,30 +53,67 @@ export function GameMap({ config, guesses, showMystery, tierWinners = [], distUn
           return res.json();
         })
         .then((data: GeoJSON.FeatureCollection) => {
-          const map = new Map<string, CityBoundaryFeature>();
+          // Collect ALL boundaries per name (some names appear multiple times)
+          const multiMap = new Map<string, CityBoundaryFeature[]>();
           for (const feature of data.features) {
             let name = (feature.properties as { name?: string; NAME?: string })?.name 
               || (feature.properties as { NAME?: string })?.NAME;
             if (name) {
-              // Clean name same way as useGame cleans city names
               name = name
                 .replace(/\s+(city|town|village|CDP|borough|municipality),?\s*.*/i, '')
                 .replace(/,\s+\w[\w\s]*$/, '')
                 .trim();
-              map.set(name.toLowerCase(), feature as CityBoundaryFeature);
+              const key = name.toLowerCase();
+              if (!multiMap.has(key)) multiMap.set(key, []);
+              multiMap.get(key)!.push(feature as CityBoundaryFeature);
+            }
+          }
+          // For unique names, store directly. For duplicates, store all — resolved at lookup time.
+          const map = new Map<string, CityBoundaryFeature>();
+          const dupes = new Map<string, CityBoundaryFeature[]>();
+          for (const [key, features] of multiMap) {
+            if (features.length === 1) {
+              map.set(key, features[0]);
+            } else {
+              dupes.set(key, features);
             }
           }
           setBoundaries(map);
+          setBoundaryDupes(dupes);
         })
         .catch(() => { /* boundaries not available yet — use dots */ });
     }
   }, [config.id]);
 
+  // Helper to resolve boundary, handling duplicate names by proximity
+  const resolveBoundary = (name: string, lat: number, lng: number): CityBoundaryFeature | null => {
+    const b = boundaries.get(name.toLowerCase());
+    if (b) return b;
+    const dupes = boundaryDupes.get(name.toLowerCase());
+    if (!dupes || dupes.length === 0) return null;
+    let best: CityBoundaryFeature | null = null;
+    let bestDist = Infinity;
+    for (const feat of dupes) {
+      const coords = feat.geometry.type === 'MultiPolygon'
+        ? feat.geometry.coordinates[0][0][0]
+        : feat.geometry.type === 'Polygon'
+        ? feat.geometry.coordinates[0][0]
+        : null;
+      if (coords) {
+        const dx = coords[0] - lng;
+        const dy = coords[1] - lat;
+        const dist = dx * dx + dy * dy;
+        if (dist < bestDist) { bestDist = dist; best = feat; }
+      }
+    }
+    return best;
+  };
+
   const { boundaryGuesses, dotGuesses } = useMemo(() => {
     const bg: { guess: Guess; feature: CityBoundaryFeature }[] = [];
     const dg: Guess[] = [];
     for (const guess of guesses) {
-      const boundary = boundaries.get(guess.city.name.toLowerCase());
+      const boundary = resolveBoundary(guess.city.name, guess.city.lat, guess.city.lng);
       if (boundary) bg.push({ guess, feature: boundary });
       else dg.push(guess);
     }
@@ -83,7 +122,7 @@ export function GameMap({ config, guesses, showMystery, tierWinners = [], distUn
 
   const mysteryBoundary = useMemo(() => {
     if (!showMystery) return null;
-    return boundaries.get(showMystery.name.toLowerCase()) || null;
+    return resolveBoundary(showMystery.name, showMystery.lat, showMystery.lng);
   }, [showMystery, boundaries]);
 
   const unit = distUnit;
@@ -207,7 +246,7 @@ export function GameMap({ config, guesses, showMystery, tierWinners = [], distUn
 
         {/* Previous tier winners */}
         {tierWinners.map((guess) => {
-          const winnerBoundary = boundaries.get(guess.city.name.toLowerCase());
+          const winnerBoundary = resolveBoundary(guess.city.name, guess.city.lat, guess.city.lng);
           if (winnerBoundary) {
             return (
               <GeoJSON

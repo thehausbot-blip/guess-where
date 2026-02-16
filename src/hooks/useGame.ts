@@ -118,7 +118,9 @@ export function useGame(mapConfig: MapConfig): UseGameReturn {
                     .replace(/\s+(city|town|village|CDP|borough|municipality),?\s*.*/i, '')
                     .replace(/,\s+\w[\w\s]*$/, '')
                     .trim();
-                  bMap[name.toLowerCase()] = feature;
+                  const key = name.toLowerCase();
+                  if (!bMap[key]) bMap[key] = [];
+                  bMap[key].push(feature);
                 }
               }
               boundariesRef.current = bMap;

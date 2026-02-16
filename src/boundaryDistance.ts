@@ -1,7 +1,31 @@
 import * as turf from '@turf/turf';
 
 export interface BoundaryMap {
-  [cityNameLower: string]: GeoJSON.Feature;
+  [cityNameLower: string]: GeoJSON.Feature[];
+}
+
+/**
+ * Pick the closest boundary feature to the given city coordinates.
+ */
+function resolveBoundary(
+  city: { lat: number; lng: number },
+  features: GeoJSON.Feature[] | undefined
+): GeoJSON.Feature | undefined {
+  if (!features || features.length === 0) return undefined;
+  if (features.length === 1) return features[0];
+  let best: GeoJSON.Feature | undefined;
+  let bestDist = Infinity;
+  for (const feat of features) {
+    try {
+      const c = turf.centroid(feat as turf.AllGeoJSON);
+      const [lng, lat] = c.geometry.coordinates;
+      const dx = lng - city.lng;
+      const dy = lat - city.lat;
+      const dist = dx * dx + dy * dy;
+      if (dist < bestDist) { bestDist = dist; best = feat; }
+    } catch { /* skip */ }
+  }
+  return best;
 }
 
 /**
@@ -15,8 +39,8 @@ export function calculateBorderDistance(
   mysteryCity: { name: string; lat: number; lng: number },
   boundaries: BoundaryMap
 ): number {
-  const guessBoundary = boundaries[guessCity.name.toLowerCase()];
-  const mysteryBoundary = boundaries[mysteryCity.name.toLowerCase()];
+  const guessBoundary = resolveBoundary(guessCity, boundaries[guessCity.name.toLowerCase()]);
+  const mysteryBoundary = resolveBoundary(mysteryCity, boundaries[mysteryCity.name.toLowerCase()]);
 
   // If both boundaries exist, compute border-to-border
   if (guessBoundary && mysteryBoundary) {
