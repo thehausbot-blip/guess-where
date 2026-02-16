@@ -224,18 +224,42 @@ export function generateShareText(
   t?: (key: string, vars?: Record<string, string>) => string,
   mapId?: string
 ): string {
-  const emojis = guesses.map(g => getColorEmoji(g.color)).join('');
-  const won = guesses[guesses.length - 1]?.color === 'correct';
-  const status = gaveUp ? '🏳️' : won ? `${guesses.length}` : 'X';
   const flag = mapEmoji || '🗺️';
   const guesser = t ? t('share.guesser') : 'Guesser';
   const link = getPlayLink(mapId);
-  
-  return `${flag} ${mapName} ${guesser} #${dayNumber} (${difficulty}) - ${status}
+  const won = guesses[guesses.length - 1]?.color === 'correct';
 
-${emojis}${gaveUp ? ' 🏳️' : ''}
-${link}`;
+  let result: string;
+  if (gaveUp) {
+    result = `Gave up after ${guesses.length} guesses`;
+  } else if (won) {
+    result = `Got it in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'}! ${getGuessReaction(guesses.length)}`;
+  } else {
+    result = `${guesses.length} guesses`;
+  }
+
+  return `${flag} ${mapName} ${guesser} #${dayNumber}
+
+${result}
+
+${gaveUp ? 'Think you can do better?' : 'Can you beat my score?'}
+👉 ${link}`;
 }
+
+function getGuessReaction(count: number): string {
+  if (count === 1) return '🤯';
+  if (count <= 3) return '🔥';
+  if (count <= 5) return '💪';
+  if (count <= 10) return '👍';
+  return '😅';
+}
+
+const TIER_DISPLAY = [
+  { emoji: '⭐', name: 'Very Easy' },
+  { emoji: '🟢', name: 'Easy' },
+  { emoji: '🟠', name: 'Hard' },
+  { emoji: '🧠', name: 'Insane' },
+];
 
 /**
  * Generate daily challenge share text
@@ -254,37 +278,46 @@ export function generateDailyShareText(
 ): string {
   const flag = mapEmoji || '🗺️';
   const guesser = t ? t('share.guesser') : 'Guesser';
-  const daily = t ? t('share.daily') : 'Daily';
   const link = getPlayLink(mapId);
 
+  // Single-tier maps (e.g. USA states)
   if (singleTier) {
-    const guessWord = t ? t('share.guesses') : 'guesses';
-    const status = gaveUp ? '🏳️' : `✅ ${totalGuesses} ${guessWord}`;
-    return `${flag} ${mapName} ${guesser} ${daily} #${dayNumber}
-${status}
-${link}`;
+    let result: string;
+    if (gaveUp) {
+      result = `Gave up after ${totalGuesses} guesses`;
+    } else {
+      result = `Got it in ${totalGuesses} ${totalGuesses === 1 ? 'guess' : 'guesses'}! ${getGuessReaction(totalGuesses)}`;
+    }
+    return `${flag} ${mapName} ${guesser} — Daily #${dayNumber}
+
+${result}
+
+${gaveUp ? 'Think you can do better?' : 'Can you beat my score?'}
+👉 ${link}`;
   }
 
-  const tierNames = ['⭐', '🟢', '🟠', '🧠'];
-  const completed = tierGuesses.map((g, i) => `${tierNames[i]}${g}`).join(' ');
-  const champion = !gaveUp && highestTier >= 3;
-  
-  const totalTiers = tierNames.length;
-  
-  let header: string;
+  // Multi-tier daily
+  const totalTiers = TIER_DISPLAY.length;
+  const champion = !gaveUp && highestTier >= totalTiers - 1;
+
+  let result: string;
   if (champion) {
-    header = t 
-      ? t('share.champion', { total: String(totalTiers), guesses: String(totalGuesses) })
-      : `🏆 CHAMPION! Tier ${totalTiers}/${totalTiers} • ${totalGuesses} guesses`;
+    const breakdown = tierGuesses.map((g, i) => `${TIER_DISPLAY[i].emoji} ${g}`).join(' → ');
+    result = `🏆 Champion! All ${totalTiers} tiers in ${totalGuesses} guesses!
+
+${breakdown}`;
+  } else if (gaveUp) {
+    const reachedName = TIER_DISPLAY[highestTier]?.name || `Tier ${highestTier + 1}`;
+    result = `Made it to ${reachedName} (Tier ${highestTier + 1}/${totalTiers}) — ${totalGuesses} guesses`;
   } else {
-    const tierText = t
-      ? t('share.tier', { current: String(highestTier + 1), total: String(totalTiers), guesses: String(totalGuesses) })
-      : `Tier ${highestTier + 1}/${totalTiers} • ${totalGuesses} guesses`;
-    header = gaveUp ? `🏳️ ${tierText}` : tierText;
+    const reachedName = TIER_DISPLAY[highestTier]?.name || `Tier ${highestTier + 1}`;
+    result = `${TIER_DISPLAY[highestTier]?.emoji || '🎯'} ${reachedName} — got it in ${totalGuesses} guesses!`;
   }
 
-  return `${flag} ${mapName} ${guesser} ${daily} #${dayNumber}
-${header}
-${completed}${gaveUp ? ' 🏳️' : ''}
-${link}`;
+  return `${flag} ${mapName} ${guesser} — Daily #${dayNumber}
+
+${result}
+
+${champion ? 'Think you can beat that?' : gaveUp ? 'Think you can do better?' : 'Can you beat my score?'}
+👉 ${link}`;
 }
