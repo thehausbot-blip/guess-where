@@ -3,6 +3,7 @@ import { WorldGlobe } from './WorldGlobe';
 import { useWorldGame, type WorldGuess, getWorldColorHex } from '../hooks/useWorldGame';
 import { fuzzyMatchCountries, type WorldCountry } from '../worldGameData';
 import { getDayNumber } from '../utils';
+import { useUnitPref } from '../hooks/useUnitPref';
 import { ShareModal } from './ShareModal';
 
 interface WorldGameViewProps {
@@ -108,8 +109,9 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
   );
 }
 
-function GuessRow({ guess }: { guess: WorldGuess }) {
+function GuessRow({ guess, unit }: { guess: WorldGuess; unit: 'mi' | 'km' }) {
   const bgColor = getWorldColorHex(guess.color);
+  const dist = unit === 'mi' ? Math.round(guess.distance * 0.621371) : guess.distance;
   return (
     <div
       className="flex items-center gap-3 px-4 py-2 rounded-lg border border-white/10"
@@ -117,7 +119,7 @@ function GuessRow({ guess }: { guess: WorldGuess }) {
     >
       <span className="text-xl">{guess.country.emoji}</span>
       <span className="text-white font-medium flex-1">{guess.country.name}</span>
-      <span className="text-blue-200 text-sm font-mono">{guess.distance.toLocaleString()} km</span>
+      <span className="text-blue-200 text-sm font-mono">{dist.toLocaleString()} {unit}</span>
       <span className="text-xl">{guess.direction}</span>
     </div>
   );
@@ -128,6 +130,7 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
   const [shareText, setShareText] = useState<string | null>(null);
   const dayNumber = getDayNumber();
 
+  const [distUnit, toggleUnit] = useUnitPref();
   const guessedIsos = new Set(gameState.guesses.map(g => g.country.iso));
   const won = gameState.isComplete && !gameState.gaveUp;
   const isDaily = gameState.mode === 'daily';
@@ -144,7 +147,12 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
             <h1 className="text-lg sm:text-2xl md:text-4xl font-bold text-white whitespace-nowrap truncate mx-2">
               🌍 <span className="text-red-500">World</span> Guesser
             </h1>
-            <div className="w-16" />
+            <button
+              onClick={toggleUnit}
+              className="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-blue-200 text-xs sm:text-sm border border-white/10 transition-colors shrink-0"
+            >
+              📏 {distUnit}
+            </button>
           </div>
           {isDaily && <p className="text-blue-200 text-sm sm:text-lg">Day #{dayNumber}</p>}
         </header>
@@ -245,7 +253,7 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
             <h2 className="text-white font-semibold text-lg mb-3">Guesses ({gameState.guesses.length})</h2>
             <div className="space-y-2">
               {gameState.guesses.map(guess => (
-                <GuessRow key={guess.country.iso} guess={guess} />
+                <GuessRow key={guess.country.iso} guess={guess} unit={distUnit} />
               ))}
             </div>
           </div>
