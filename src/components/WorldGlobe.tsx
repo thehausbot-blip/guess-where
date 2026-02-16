@@ -149,14 +149,21 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
     if (!iso) return 'rgba(0,0,0,0)';
 
     // Target found
-    if (targetFound && iso === targetCountryIso) return 'rgba(34, 197, 94, 0.85)';
+    if (targetFound && iso === targetCountryIso) return 'rgba(34, 197, 94, 0.95)';
 
     const guess = guessMap.get(iso);
     if (guess) {
-      const hex = getWorldColorHex(guess.color);
-      return hex + 'bb';
+      // Strong opaque overlay so colors are clearly visible on satellite texture
+      const colorMap: Record<string, string> = {
+        correct: 'rgba(34, 197, 94, 0.95)',
+        hot: 'rgba(239, 68, 68, 0.9)',
+        warm: 'rgba(249, 115, 22, 0.85)',
+        medium: 'rgba(234, 179, 8, 0.8)',
+        cool: 'rgba(59, 130, 246, 0.8)',
+      };
+      return colorMap[guess.color] || 'rgba(59, 130, 246, 0.8)';
     }
-    // Transparent so topo texture shows through
+    // Transparent so satellite texture shows through
     return 'rgba(0,0,0,0)';
   }, [guessMap, targetFound, targetCountryIso, getCountryIso]);
 
@@ -197,9 +204,9 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
           polygonAltitude={(feat: object) => {
             const f = feat as CountryFeature;
             const iso = getCountryIso(f);
-            if (targetFound && iso === targetCountryIso) return 0.04;
-            if (guessMap.has(iso)) return 0.02;
-            return 0.005;
+            if (targetFound && iso === targetCountryIso) return 0.06;
+            if (guessMap.has(iso)) return 0.03;
+            return 0.001;
           }}
         />
       )}
