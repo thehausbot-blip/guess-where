@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- Dark blue background -->
+  <rect width="300" height="200" fill="#002D72"/>
+  <!-- Shield/crest simplified -->
+  <rect x="115" y="45" width="70" height="55" rx="5" fill="#FFD700" stroke="#FFFFFF" stroke-width="2"/>
+  <!-- Sun over water -->
+  <circle cx="150" cy="60" r="10" fill="#FF8C00"/>
+  <!-- Water waves -->
+  <path d="M120,85 Q135,78 150,85 Q165,92 180,85" fill="none" stroke="#4169E1" stroke-width="3"/>
+  <!-- Mountains -->
+  <polygon points="125,80 140,65 155,80" fill="#4B7A47"/>
+  <!-- Banner -->
+  <rect x="110" y="110" width="80" height="15" rx="2" fill="#FFFFFF"/>
+  <text x="150" y="121" text-anchor="middle" font-family="serif" font-size="7" font-weight="bold" fill="#002D72">EXCELSIOR</text>
+  <!-- Liberty and Justice figures (simplified) -->
+  <rect x="95" y="50" width="10" height="60" rx="3" fill="#D4A574"/>
+  <rect x="195" y="50" width="10" height="60" rx="3" fill="#D4A574"/>
+</svg>

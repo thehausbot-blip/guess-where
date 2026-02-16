@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- Three stripes -->
+  <rect x="0" y="0" width="300" height="67" fill="#BF0A30"/>
+  <rect x="0" y="67" width="300" height="66" fill="#FFFFFF"/>
+  <rect x="0" y="133" width="300" height="67" fill="#BF0A30"/>
+  <!-- Blue canton -->
+  <rect x="0" y="0" width="100" height="100" fill="#002868"/>
+  <!-- Circle of 13 stars -->
+  <circle cx="50" cy="50" r="35" fill="none" stroke="#FFD700" stroke-width="2"/>
+  <!-- Coat of arms pillars -->
+  <rect x="40" y="35" width="5" height="30" fill="#FFD700"/>
+  <rect x="55" y="35" width="5" height="30" fill="#FFD700"/>
+  <!-- Arch -->
+  <path d="M40,35 Q50,25 60,35" fill="none" stroke="#FFD700" stroke-width="2"/>
+  <!-- IN GOD WE TRUST -->
+  <text x="50" y="80" text-anchor="middle" font-family="serif" font-size="5" fill="#FFD700">IN GOD WE TRUST</text>
+</svg>

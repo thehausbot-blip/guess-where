@@ -1,0 +1,217 @@
+# World Country Data Summary
+
+**Total countries processed:** 214
+**Total cities:** 165968
+
+## Skipped Countries (< 5 cities)
+
+- VG (British Virgin Islands): 1 cities
+- CK (Cook Islands): 2 cities
+- FK (Falkland Islands): 1 cities
+- JE (Jersey): 4 cities
+- MS (Montserrat): 4 cities
+- NU (Niue): 1 cities
+- NF (Norfolk Island): 1 cities
+- MP (Northern Mariana Islands): 3 cities
+- PN (Pitcairn Islands): 1 cities
+- BL (Saint Barthélemy): 1 cities
+- PM (Saint Pierre and Miquelon): 2 cities
+- VA (Vatican City): 1 cities
+- WF (Wallis and Futuna): 4 cities
+
+## Countries with Boundary Data
+
+- AD: 6 urban area matches
+- AE: 65 urban area matches
+- AF: 5 urban area matches
+- AG: 5 urban area matches
+- AL: 13 urban area matches
+- AM: 67 urban area matches
+- AO: 22 urban area matches
+- AR: 164 urban area matches
+- AT: 140 urban area matches
+- AU: 188 urban area matches
+- AW: 12 urban area matches
+- AZ: 71 urban area matches
+- BA: 33 urban area matches
+- BB: 6 urban area matches
+- BD: 38 urban area matches
+- BE: 186 urban area matches
+- BF: 7 urban area matches
+- BG: 52 urban area matches
+- BH: 9 urban area matches
+- BI: 4 urban area matches
+- BJ: 33 urban area matches
+- BN: 29 urban area matches
+- BO: 16 urban area matches
+- BR: 193 urban area matches
+- BS: 4 urban area matches
+- BW: 16 urban area matches
+- BY: 52 urban area matches
+- CA: 187 urban area matches
+- CD: 27 urban area matches
+- CF: 7 urban area matches
+- CG: 4 urban area matches
+- CH: 156 urban area matches
+- CI: 26 urban area matches
+- CL: 92 urban area matches
+- CM: 21 urban area matches
+- CN: 191 urban area matches
+- CO: 38 urban area matches
+- CR: 42 urban area matches
+- CU: 27 urban area matches
+- CW: 7 urban area matches
+- CY: 37 urban area matches
+- CZ: 153 urban area matches
+- DE: 199 urban area matches
+- DJ: 1 urban area matches
+- DK: 144 urban area matches
+- DO: 19 urban area matches
+- DZ: 117 urban area matches
+- EC: 31 urban area matches
+- EE: 31 urban area matches
+- EG: 85 urban area matches
+- EH: 2 urban area matches
+- ER: 5 urban area matches
+- ES: 174 urban area matches
+- ET: 27 urban area matches
+- FI: 126 urban area matches
+- FR: 200 urban area matches
+- GA: 4 urban area matches
+- GB: 194 urban area matches
+- GE: 25 urban area matches
+- GG: 9 urban area matches
+- GH: 44 urban area matches
+- GM: 39 urban area matches
+- GN: 5 urban area matches
+- GR: 128 urban area matches
+- GT: 13 urban area matches
+- GW: 3 urban area matches
+- GY: 3 urban area matches
+- HK: 197 urban area matches
+- HN: 9 urban area matches
+- HR: 106 urban area matches
+- HT: 3 urban area matches
+- HU: 169 urban area matches
+- ID: 51 urban area matches
+- IE: 88 urban area matches
+- IL: 127 urban area matches
+- IM: 3 urban area matches
+- IN: 188 urban area matches
+- IQ: 58 urban area matches
+- IR: 179 urban area matches
+- IS: 11 urban area matches
+- IT: 192 urban area matches
+- JM: 12 urban area matches
+- JO: 50 urban area matches
+- JP: 198 urban area matches
+- KE: 31 urban area matches
+- KG: 40 urban area matches
+- KH: 9 urban area matches
+- KN: 5 urban area matches
+- KP: 11 urban area matches
+- KR: 177 urban area matches
+- KW: 25 urban area matches
+- KZ: 50 urban area matches
+- LA: 5 urban area matches
+- LB: 30 urban area matches
+- LI: 12 urban area matches
+- LK: 14 urban area matches
+- LR: 2 urban area matches
+- LS: 6 urban area matches
+- LT: 43 urban area matches
+- LU: 112 urban area matches
+- LV: 28 urban area matches
+- LY: 37 urban area matches
+- MA: 110 urban area matches
+- MC: 10 urban area matches
+- MD: 34 urban area matches
+- ME: 15 urban area matches
+- MF: 9 urban area matches
+- MG: 21 urban area matches
+- MK: 74 urban area matches
+- ML: 12 urban area matches
+- MM: 62 urban area matches
+- MN: 2 urban area matches
+- MO: 7 urban area matches
+- MR: 6 urban area matches
+- MW: 7 urban area matches
+- MX: 156 urban area matches
+- MY: 119 urban area matches
+- MZ: 13 urban area matches
+- NA: 11 urban area matches
+- NC: 32 urban area matches
+- NE: 6 urban area matches
+- NG: 114 urban area matches
+- NI: 2 urban area matches
+- NL: 185 urban area matches
+- NO: 53 urban area matches
+- NP: 8 urban area matches
+- NZ: 147 urban area matches
+- OM: 18 urban area matches
+- PA: 17 urban area matches
+- PE: 83 urban area matches
+- PG: 2 urban area matches
+- PH: 74 urban area matches
+- PK: 160 urban area matches
+- PL: 179 urban area matches
+- PR: 50 urban area matches
+- PS: 48 urban area matches
+- PT: 153 urban area matches
+- PY: 17 urban area matches
+- QA: 29 urban area matches
+- RO: 101 urban area matches
+- RS: 87 urban area matches
+- RU: 198 urban area matches
+- RW: 12 urban area matches
+- SA: 67 urban area matches
+- SD: 41 urban area matches
+- SE: 141 urban area matches
+- SG: 116 urban area matches
+- SI: 82 urban area matches
+- SK: 101 urban area matches
+- SL: 8 urban area matches
+- SM: 13 urban area matches
+- SN: 24 urban area matches
+- SO: 4 urban area matches
+- SR: 11 urban area matches
+- SS: 3 urban area matches
+- SV: 13 urban area matches
+- SX: 6 urban area matches
+- SY: 75 urban area matches
+- SZ: 4 urban area matches
+- TD: 5 urban area matches
+- TG: 7 urban area matches
+- TH: 159 urban area matches
+- TJ: 27 urban area matches
+- TM: 28 urban area matches
+- TN: 122 urban area matches
+- TR: 147 urban area matches
+- TT: 15 urban area matches
+- TZ: 26 urban area matches
+- UA: 185 urban area matches
+- UG: 23 urban area matches
+- US: 192 urban area matches
+- UY: 50 urban area matches
+- UZ: 136 urban area matches
+- VE: 89 urban area matches
+- VI: 4 urban area matches
+- VN: 68 urban area matches
+- XK: 12 urban area matches
+- YE: 20 urban area matches
+- ZA: 129 urban area matches
+- ZM: 25 urban area matches
+- ZW: 18 urban area matches
+
+**Total countries with boundaries:** 181
+
+## Issues
+
+- BQ: 8 cities but no Natural Earth outline
+- GF: 17 cities but no Natural Earth outline
+- GI: 6 cities but no Natural Earth outline
+- GP: 25 cities but no Natural Earth outline
+- MQ: 20 cities but no Natural Earth outline
+- RE: 26 cities but no Natural Earth outline
+- TW: 88 cities but no Natural Earth outline
+- YT: 57 cities but no Natural Earth outline

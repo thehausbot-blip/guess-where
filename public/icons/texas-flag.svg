@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
+  <!-- Blue vertical stripe -->
+  <rect x="0" y="0" width="100" height="200" fill="#002868"/>
+  <!-- White horizontal stripe -->
+  <rect x="100" y="0" width="200" height="100" fill="#FFFFFF"/>
+  <!-- Red horizontal stripe -->
+  <rect x="100" y="100" width="200" height="100" fill="#BF0A30"/>
+  <!-- Lone Star -->
+  <polygon points="50,30 58,55 85,55 63,70 71,95 50,80 29,95 37,70 15,55 42,55" fill="#FFFFFF"/>
+</svg>

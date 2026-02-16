@@ -1,0 +1,450 @@
+[
+  {
+    "id": "alabama",
+    "name": "Alabama",
+    "abbr": "AL",
+    "emoji": "\ud83c\udfc8",
+    "cityCount": 593,
+    "region": "southeast"
+  },
+  {
+    "id": "alaska",
+    "name": "Alaska",
+    "abbr": "AK",
+    "emoji": "\ud83c\udfd4\ufe0f",
+    "cityCount": 350,
+    "region": "west"
+  },
+  {
+    "id": "american_samoa",
+    "name": "American Samoa",
+    "abbr": "AS",
+    "emoji": "\ud83c\udfdd\ufe0f",
+    "cityCount": 15,
+    "region": "territories"
+  },
+  {
+    "id": "arizona",
+    "name": "Arizona",
+    "abbr": "AZ",
+    "emoji": "\ud83c\udf35",
+    "cityCount": 465,
+    "region": "southwest"
+  },
+  {
+    "id": "arkansas",
+    "name": "Arkansas",
+    "abbr": "AR",
+    "emoji": "\ud83d\udc8e",
+    "cityCount": 626,
+    "region": "southeast"
+  },
+  {
+    "id": "california",
+    "name": "California",
+    "abbr": "CA",
+    "emoji": "\ud83d\udc3b",
+    "cityCount": 1607,
+    "region": "west"
+  },
+  {
+    "id": "colorado",
+    "name": "Colorado",
+    "abbr": "CO",
+    "emoji": "\u26f0\ufe0f",
+    "cityCount": 480,
+    "region": "west"
+  },
+  {
+    "id": "connecticut",
+    "name": "Connecticut",
+    "abbr": "CT",
+    "emoji": "\ud83e\udd5c",
+    "cityCount": 215,
+    "region": "northeast"
+  },
+  {
+    "id": "delaware",
+    "name": "Delaware",
+    "abbr": "DE",
+    "emoji": "\ud83d\udc99",
+    "cityCount": 79,
+    "region": "northeast"
+  },
+  {
+    "id": "dc",
+    "name": "District of Columbia",
+    "abbr": "DC",
+    "emoji": "\ud83c\udfdb\ufe0f",
+    "cityCount": 1,
+    "region": "northeast"
+  },
+  {
+    "id": "florida",
+    "name": "Florida",
+    "abbr": "FL",
+    "emoji": "\ud83c\udf34",
+    "cityCount": 955,
+    "region": "southeast"
+  },
+  {
+    "id": "georgia",
+    "name": "Georgia",
+    "abbr": "GA",
+    "emoji": "\ud83c\udf51",
+    "cityCount": 674,
+    "region": "southeast"
+  },
+  {
+    "id": "guam",
+    "name": "Guam",
+    "abbr": "GU",
+    "emoji": "\ud83c\udfdd\ufe0f",
+    "cityCount": 19,
+    "region": "territories"
+  },
+  {
+    "id": "hawaii",
+    "name": "Hawaii",
+    "abbr": "HI",
+    "emoji": "\ud83c\udf3a",
+    "cityCount": 163,
+    "region": "west"
+  },
+  {
+    "id": "idaho",
+    "name": "Idaho",
+    "abbr": "ID",
+    "emoji": "\ud83e\udd54",
+    "cityCount": 237,
+    "region": "west"
+  },
+  {
+    "id": "illinois",
+    "name": "Illinois",
+    "abbr": "IL",
+    "emoji": "\ud83c\udfd9\ufe0f",
+    "cityCount": 1466,
+    "region": "midwest"
+  },
+  {
+    "id": "indiana",
+    "name": "Indiana",
+    "abbr": "IN",
+    "emoji": "\ud83c\udfce\ufe0f",
+    "cityCount": 696,
+    "region": "midwest"
+  },
+  {
+    "id": "iowa",
+    "name": "Iowa",
+    "abbr": "IA",
+    "emoji": "\ud83c\udf3d",
+    "cityCount": 1028,
+    "region": "midwest"
+  },
+  {
+    "id": "kansas",
+    "name": "Kansas",
+    "abbr": "KS",
+    "emoji": "\ud83c\udf3b",
+    "cityCount": 740,
+    "region": "midwest"
+  },
+  {
+    "id": "kentucky",
+    "name": "Kentucky",
+    "abbr": "KY",
+    "emoji": "\ud83d\udc34",
+    "cityCount": 554,
+    "region": "southeast"
+  },
+  {
+    "id": "louisiana",
+    "name": "Louisiana",
+    "abbr": "LA",
+    "emoji": "\u269c\ufe0f",
+    "cityCount": 488,
+    "region": "southeast"
+  },
+  {
+    "id": "maine",
+    "name": "Maine",
+    "abbr": "ME",
+    "emoji": "\ud83e\udd9e",
+    "cityCount": 155,
+    "region": "northeast"
+  },
+  {
+    "id": "maryland",
+    "name": "Maryland",
+    "abbr": "MD",
+    "emoji": "\ud83e\udd80",
+    "cityCount": 536,
+    "region": "northeast"
+  },
+  {
+    "id": "massachusetts",
+    "name": "Massachusetts",
+    "abbr": "MA",
+    "emoji": "\ud83e\uded6",
+    "cityCount": 248,
+    "region": "northeast"
+  },
+  {
+    "id": "michigan",
+    "name": "Michigan",
+    "abbr": "MI",
+    "emoji": "\ud83d\ude97",
+    "cityCount": 745,
+    "region": "midwest"
+  },
+  {
+    "id": "minnesota",
+    "name": "Minnesota",
+    "abbr": "MN",
+    "emoji": "\ud83c\udfd2",
+    "cityCount": 913,
+    "region": "midwest"
+  },
+  {
+    "id": "mississippi",
+    "name": "Mississippi",
+    "abbr": "MS",
+    "emoji": "\ud83c\udfb8",
+    "cityCount": 428,
+    "region": "southeast"
+  },
+  {
+    "id": "missouri",
+    "name": "Missouri",
+    "abbr": "MO",
+    "emoji": "\ud83c\udff9",
+    "cityCount": 1078,
+    "region": "midwest"
+  },
+  {
+    "id": "montana",
+    "name": "Montana",
+    "abbr": "MT",
+    "emoji": "\ud83e\udd8c",
+    "cityCount": 486,
+    "region": "west"
+  },
+  {
+    "id": "nebraska",
+    "name": "Nebraska",
+    "abbr": "NE",
+    "emoji": "\ud83c\udf3e",
+    "cityCount": 590,
+    "region": "midwest"
+  },
+  {
+    "id": "nevada",
+    "name": "Nevada",
+    "abbr": "NV",
+    "emoji": "\ud83c\udfb0",
+    "cityCount": 133,
+    "region": "west"
+  },
+  {
+    "id": "new_hampshire",
+    "name": "New Hampshire",
+    "abbr": "NH",
+    "emoji": "\ud83c\udfd4\ufe0f",
+    "cityCount": 100,
+    "region": "northeast"
+  },
+  {
+    "id": "new_jersey",
+    "name": "New Jersey",
+    "abbr": "NJ",
+    "emoji": "\ud83c\udfd6\ufe0f",
+    "cityCount": 701,
+    "region": "northeast"
+  },
+  {
+    "id": "new_mexico",
+    "name": "New Mexico",
+    "abbr": "NM",
+    "emoji": "\ud83c\udf36\ufe0f",
+    "cityCount": 526,
+    "region": "southwest"
+  },
+  {
+    "id": "new_york",
+    "name": "New York",
+    "abbr": "NY",
+    "emoji": "\ud83d\uddfd",
+    "cityCount": 1293,
+    "region": "northeast"
+  },
+  {
+    "id": "north_carolina",
+    "name": "North Carolina",
+    "abbr": "NC",
+    "emoji": "\u2708\ufe0f",
+    "cityCount": 775,
+    "region": "southeast"
+  },
+  {
+    "id": "north_dakota",
+    "name": "North Dakota",
+    "abbr": "ND",
+    "emoji": "\ud83e\uddac",
+    "cityCount": 406,
+    "region": "midwest"
+  },
+  {
+    "id": "northern_mariana_islands",
+    "name": "Northern Mariana Islands",
+    "abbr": "MP",
+    "emoji": "\ud83c\udfdd\ufe0f",
+    "cityCount": 4,
+    "region": "territories"
+  },
+  {
+    "id": "ohio",
+    "name": "Ohio",
+    "abbr": "OH",
+    "emoji": "\ud83c\udf30",
+    "cityCount": 1265,
+    "region": "midwest"
+  },
+  {
+    "id": "oklahoma",
+    "name": "Oklahoma",
+    "abbr": "OK",
+    "emoji": "\ud83e\udd20",
+    "cityCount": 842,
+    "region": "southwest"
+  },
+  {
+    "id": "oregon",
+    "name": "Oregon",
+    "abbr": "OR",
+    "emoji": "\ud83c\udf32",
+    "cityCount": 426,
+    "region": "west"
+  },
+  {
+    "id": "pennsylvania",
+    "name": "Pennsylvania",
+    "abbr": "PA",
+    "emoji": "\ud83d\udd14",
+    "cityCount": 1888,
+    "region": "northeast"
+  },
+  {
+    "id": "puerto_rico",
+    "name": "Puerto Rico",
+    "abbr": "PR",
+    "emoji": "\ud83c\uddf5\ud83c\uddf7",
+    "cityCount": 78,
+    "region": "territories"
+  },
+  {
+    "id": "rhode_island",
+    "name": "Rhode Island",
+    "abbr": "RI",
+    "emoji": "\u26f5",
+    "cityCount": 36,
+    "region": "northeast"
+  },
+  {
+    "id": "south_carolina",
+    "name": "South Carolina",
+    "abbr": "SC",
+    "emoji": "\ud83c\udf19",
+    "cityCount": 475,
+    "region": "southeast"
+  },
+  {
+    "id": "south_dakota",
+    "name": "South Dakota",
+    "abbr": "SD",
+    "emoji": "\ud83d\uddff",
+    "cityCount": 478,
+    "region": "midwest"
+  },
+  {
+    "id": "tennessee",
+    "name": "Tennessee",
+    "abbr": "TN",
+    "emoji": "\ud83c\udfb5",
+    "cityCount": 504,
+    "region": "southeast"
+  },
+  {
+    "id": "texas",
+    "name": "Texas",
+    "abbr": "TX",
+    "emoji": "\u2b50",
+    "cityCount": 1023,
+    "region": "southwest"
+  },
+  {
+    "id": "us_virgin_islands",
+    "name": "U.S. Virgin Islands",
+    "abbr": "VI",
+    "emoji": "\ud83c\udfdd\ufe0f",
+    "cityCount": 13,
+    "region": "territories"
+  },
+  {
+    "id": "utah",
+    "name": "Utah",
+    "abbr": "UT",
+    "emoji": "\ud83c\udfdc\ufe0f",
+    "cityCount": 332,
+    "region": "west"
+  },
+  {
+    "id": "vermont",
+    "name": "Vermont",
+    "abbr": "VT",
+    "emoji": "\ud83c\udf41",
+    "cityCount": 180,
+    "region": "northeast"
+  },
+  {
+    "id": "virginia",
+    "name": "Virginia",
+    "abbr": "VA",
+    "emoji": "\ud83c\udfdb\ufe0f",
+    "cityCount": 672,
+    "region": "southeast"
+  },
+  {
+    "id": "washington",
+    "name": "Washington",
+    "abbr": "WA",
+    "emoji": "\u2615",
+    "cityCount": 639,
+    "region": "west"
+  },
+  {
+    "id": "west_virginia",
+    "name": "West Virginia",
+    "abbr": "WV",
+    "emoji": "\u26cf\ufe0f",
+    "cityCount": 438,
+    "region": "southeast"
+  },
+  {
+    "id": "wisconsin",
+    "name": "Wisconsin",
+    "abbr": "WI",
+    "emoji": "\ud83e\uddc0",
+    "cityCount": 804,
+    "region": "midwest"
+  },
+  {
+    "id": "wyoming",
+    "name": "Wyoming",
+    "abbr": "WY",
+    "emoji": "\ud83e\udd20",
+    "cityCount": 203,
+    "region": "west"
+  }
+]

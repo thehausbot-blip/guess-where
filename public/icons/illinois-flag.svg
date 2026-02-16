@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- White background -->
+  <rect width="300" height="200" fill="#FFFFFF"/>
+  <!-- Eagle with shield -->
+  <ellipse cx="150" cy="80" rx="30" ry="20" fill="#8B4513"/>
+  <!-- Shield on eagle -->
+  <rect x="138" y="70" width="24" height="20" rx="3" fill="#002868"/>
+  <rect x="140" y="72" width="20" height="3" fill="#BF0A30"/>
+  <rect x="140" y="78" width="20" height="3" fill="#BF0A30"/>
+  <rect x="140" y="84" width="20" height="3" fill="#BF0A30"/>
+  <!-- Wings -->
+  <polygon points="120,75 135,60 140,80" fill="#8B4513"/>
+  <polygon points="180,75 165,60 160,80" fill="#8B4513"/>
+  <!-- Banner in beak -->
+  <rect x="125" y="58" width="50" height="10" rx="2" fill="#FFFFFF" stroke="#8B4513" stroke-width="1"/>
+  <text x="150" y="66" text-anchor="middle" font-family="serif" font-size="5" fill="#002868">STATE SOVEREIGNTY</text>
+  <!-- ILLINOIS text -->
+  <text x="150" y="135" text-anchor="middle" font-family="serif" font-size="18" font-weight="bold" fill="#002868">ILLINOIS</text>
+  <!-- Rock/prairie -->
+  <ellipse cx="150" cy="105" rx="35" ry="8" fill="#90EE90"/>
+</svg>

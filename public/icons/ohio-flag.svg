@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- Ohio burgee (swallowtail) shape approximated as rectangle -->
+  <!-- Red and white stripes -->
+  <rect x="0" y="0" width="300" height="40" fill="#BF0A30"/>
+  <rect x="0" y="40" width="300" height="40" fill="#FFFFFF"/>
+  <rect x="0" y="80" width="300" height="40" fill="#BF0A30"/>
+  <rect x="0" y="120" width="300" height="40" fill="#FFFFFF"/>
+  <rect x="0" y="160" width="300" height="40" fill="#BF0A30"/>
+  <!-- Blue triangle -->
+  <polygon points="0,0 130,100 0,200" fill="#002868"/>
+  <!-- White circle with red center (O) -->
+  <circle cx="55" cy="100" r="25" fill="#FFFFFF"/>
+  <circle cx="55" cy="100" r="12" fill="#BF0A30"/>
+</svg>

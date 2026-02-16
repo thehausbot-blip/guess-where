@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- Dark blue background -->
+  <rect width="300" height="200" fill="#00287E"/>
+  <!-- Elk and moose supporting shield -->
+  <ellipse cx="115" cy="85" rx="15" ry="25" fill="#8B6914"/>
+  <ellipse cx="185" cy="85" rx="15" ry="25" fill="#8B6914"/>
+  <!-- Shield -->
+  <rect x="125" y="60" width="50" height="45" rx="5" fill="#4169E1" stroke="#FFD700" stroke-width="2"/>
+  <!-- Sun on shield -->
+  <circle cx="150" cy="73" r="8" fill="#FFD700"/>
+  <!-- Man with rifle (simplified) -->
+  <rect x="145" y="80" width="10" height="15" rx="2" fill="#D4A574"/>
+  <!-- Eagle on top -->
+  <polygon points="150,35 135,50 165,50" fill="#8B6914"/>
+  <!-- Banner -->
+  <rect x="110" y="120" width="80" height="12" rx="2" fill="#FFFFFF"/>
+  <text x="150" y="129" text-anchor="middle" font-family="serif" font-size="5" fill="#00287E">E PLURIBUS UNUM</text>
+</svg>

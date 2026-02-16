@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- Dark blue background -->
+  <rect width="300" height="200" fill="#002868"/>
+  <!-- Coat of arms shield -->
+  <rect x="120" y="55" width="60" height="50" rx="5" fill="#FFD700" stroke="#FFFFFF" stroke-width="2"/>
+  <!-- Ship -->
+  <polygon points="135,70 150,60 165,70" fill="#8B4513"/>
+  <!-- Plow -->
+  <rect x="130" y="80" width="40" height="5" rx="2" fill="#8B4513"/>
+  <!-- Wheat sheaves -->
+  <rect x="135" y="85" width="4" height="15" fill="#DAA520"/>
+  <rect x="161" y="85" width="4" height="15" fill="#DAA520"/>
+  <!-- Horses -->
+  <ellipse cx="110" cy="80" rx="12" ry="20" fill="#2F2F2F"/>
+  <ellipse cx="190" cy="80" rx="12" ry="20" fill="#2F2F2F"/>
+  <!-- Eagle on top -->
+  <polygon points="150,40 140,50 160,50" fill="#DAA520"/>
+  <!-- Banner -->
+  <rect x="105" y="115" width="90" height="14" rx="2" fill="#FFFFFF"/>
+  <text x="150" y="125" text-anchor="middle" font-family="serif" font-size="6" fill="#002868">VIRTUE LIBERTY INDEPENDENCE</text>
+</svg>

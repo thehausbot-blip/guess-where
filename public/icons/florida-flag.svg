@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- White background -->
+  <rect width="300" height="200" fill="#FFFFFF"/>
+  <!-- Red diagonal cross (saltire) -->
+  <line x1="0" y1="0" x2="300" y2="200" stroke="#C8102E" stroke-width="20"/>
+  <line x1="300" y1="0" x2="0" y2="200" stroke="#C8102E" stroke-width="20"/>
+  <!-- State seal circle -->
+  <circle cx="150" cy="100" r="40" fill="none" stroke="#C8102E" stroke-width="2"/>
+  <!-- Simplified palm tree -->
+  <rect x="148" y="80" width="4" height="30" fill="#4B7A47"/>
+  <ellipse cx="150" cy="78" rx="15" ry="8" fill="#4B7A47"/>
+  <!-- Sun rays -->
+  <circle cx="150" cy="65" r="8" fill="#FFD700"/>
+</svg>
