@@ -131,8 +131,8 @@ export function GameMap({ config, guesses, showMystery, tierWinners = [], distUn
     <div className="w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden border-2 border-white/20 shadow-lg shadow-black/30">
       <MapContainer
         key={config.id}
-        center={config.center}
-        zoom={config.zoom}
+        bounds={config.bounds}
+        boundsOptions={{ padding: [20, 20] }}
         minZoom={config.minZoom}
         maxZoom={config.maxZoom}
         maxBounds={config.bounds}
