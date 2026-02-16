@@ -3,6 +3,7 @@ import { FEATURED_MAPS, getMapsByRegion, REGIONS, MAP_CONFIGS, getMapsByContinen
 import { AVATAR_OPTIONS } from '../types';
 import { useI18n } from '../i18n/useI18n';
 import { LanguageSelector } from './LanguageSelector';
+import { resetPassword } from '../firebase';
 
 const WELCOME_CYCLE = [
   { text: 'Welcome, friend!', flag: '🇺🇸' },
@@ -399,6 +400,25 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
                 >
                   {emailLoading ? '...' : emailMode === 'signup' ? 'Create Account' : 'Sign In'}
                 </button>
+                {emailMode === 'signin' && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!email.trim()) { setEmailError('Enter your email first'); return; }
+                      try {
+                        await resetPassword(email.trim());
+                        setEmailError('');
+                        alert('Password reset email sent! Check your inbox.');
+                      } catch (err: any) {
+                        if (err?.code === 'auth/user-not-found') setEmailError('No account found with that email.');
+                        else setEmailError(err?.message || 'Failed to send reset email.');
+                      }
+                    }}
+                    className="w-full text-center text-xs text-blue-200/40 hover:text-blue-200 underline transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                )}
                 <p className="text-center text-xs text-blue-200/50">
                   {emailMode === 'signin' ? (
                     <>No account? <button type="button" onClick={() => { setEmailMode('signup'); setEmailError(''); }} className="text-red-400 underline">Sign up</button></>

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile as updateFirebaseProfile, type User } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile as updateFirebaseProfile, type User } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 // TODO: Replace with your Firebase config from console.firebase.google.com
@@ -59,6 +59,11 @@ export async function signInWithEmail(email: string, password: string): Promise<
 export async function logOut(): Promise<void> {
   if (!auth) return;
   await signOut(auth);
+}
+
+export async function resetPassword(email: string): Promise<void> {
+  if (!auth) throw new Error('Firebase not configured');
+  await sendPasswordResetEmail(auth, email);
 }
 
 export function onAuthChange(callback: (user: User | null) => void): () => void {
