@@ -86,14 +86,12 @@ export function GuessInput({ cities, onGuess, disabled, guessedCities, placehold
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onFocus={(e) => {
-              // Prevent mobile keyboard from scrolling map out of view
-              const el = e.target;
-              setTimeout(() => {
-                el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                // On iOS, also prevent additional scroll
-                window.scrollTo({ top: Math.min(window.scrollY, el.getBoundingClientRect().top + window.scrollY - 60), behavior: 'smooth' });
-              }, 350);
+            onFocus={() => {
+              // On iOS, prevent keyboard from scrolling map out of view
+              const scrollY = window.scrollY;
+              setTimeout(() => window.scrollTo(0, scrollY), 0);
+              setTimeout(() => window.scrollTo(0, scrollY), 100);
+              setTimeout(() => window.scrollTo(0, scrollY), 300);
             }}
             placeholder={placeholder || (entityName ? `Enter a state or territory...` : t('game.enterCity'))}
             disabled={disabled}

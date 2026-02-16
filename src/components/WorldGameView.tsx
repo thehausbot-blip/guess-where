@@ -76,12 +76,11 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            onFocus={(e) => {
-              const el = e.target;
-              setTimeout(() => {
-                el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-                window.scrollTo({ top: Math.min(window.scrollY, el.getBoundingClientRect().top + window.scrollY - 60), behavior: 'smooth' });
-              }, 350);
+            onFocus={() => {
+              const scrollY = window.scrollY;
+              setTimeout(() => window.scrollTo(0, scrollY), 0);
+              setTimeout(() => window.scrollTo(0, scrollY), 100);
+              setTimeout(() => window.scrollTo(0, scrollY), 300);
             }}
             placeholder="Enter a country..."
             disabled={disabled}
