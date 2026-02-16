@@ -83,7 +83,7 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
                 window.scrollTo({ top: Math.min(window.scrollY, el.getBoundingClientRect().top + window.scrollY - 60), behavior: 'smooth' });
               }, 350);
             }}
-            placeholder={t('game.enterCity')}
+            placeholder="Enter a country..."
             disabled={disabled}
             autoComplete="off"
             className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-blue-200/40 border-2 ${error ? 'border-red-500' : 'border-white/20'} focus:border-red-400 focus:outline-none disabled:opacity-50 transition-colors text-lg`}
@@ -207,17 +207,6 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
             🎲 {t('game.freePlay')}
           </button>
         </div>
-
-        {/* Daily status bar */}
-        {isDaily && !gameState.isComplete && (
-          <div className="text-center mb-2">
-            <p className="text-blue-200/60 text-xs">
-              {gameState.guesses.length > 0
-                ? `${gameState.guesses.length} ${gameState.guesses.length !== 1 ? t('game.guesses') : t('game.guess_singular')}`
-                : `${t('game.enterCity')} 🌍`}
-            </p>
-          </div>
-        )}
 
         {/* Globe */}
         <div className="mb-4 relative">
