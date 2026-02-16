@@ -39,6 +39,7 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
     const success = onGuess(name);
     if (success) {
       setInput('');
+      if (inputRef.current) (inputRef.current as unknown as HTMLDivElement).textContent = '';
       setSuggestions([]);
       setError('');
     } else {
@@ -69,15 +70,17 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
   return (
     <div className="w-full max-w-md mx-auto relative">
       <div className="flex gap-2">
-        {/* Hidden fields to absorb iOS AutoFill Contact */}
-        <input type="text" name="fakeUsername" style={{ display: 'none' }} tabIndex={-1} autoComplete="username" />
-        <input type="password" name="fakePassword" style={{ display: 'none' }} tabIndex={-1} autoComplete="current-password" />
         <div className="relative flex-1">
-          <input
-            ref={inputRef}
-            type="search"
-            value={input}
-            onChange={e => setInput(e.target.value)}
+          <div
+            ref={inputRef as unknown as React.RefObject<HTMLDivElement>}
+            contentEditable={!disabled}
+            role="textbox"
+            aria-placeholder="Enter a country..."
+            data-placeholder="Enter a country..."
+            onInput={(e) => {
+              const text = (e.target as HTMLDivElement).textContent || '';
+              setInput(text);
+            }}
             onKeyDown={handleKeyDown}
             onFocus={() => {
               const scrollY = window.scrollY;
@@ -85,16 +88,8 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
               setTimeout(() => window.scrollTo(0, scrollY), 100);
               setTimeout(() => window.scrollTo(0, scrollY), 300);
             }}
-            placeholder="Enter a country..."
-            disabled={disabled}
-            name="guess-input-field"
-            autoComplete="one-time-code"
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck={false}
-            data-1p-ignore
-            data-lpignore="true"
-            className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-blue-200/40 border-2 ${error ? 'border-red-500' : 'border-white/20'} focus:border-red-400 focus:outline-none disabled:opacity-50 transition-colors text-lg`}
+            className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white border-2 ${error ? 'border-red-500' : 'border-white/20'} focus:border-red-400 focus:outline-none transition-colors text-lg min-h-[50px] leading-[26px] empty:before:content-[attr(data-placeholder)] empty:before:text-blue-200/40 ${disabled ? 'opacity-50 pointer-events-none' : ''}`}
+            suppressContentEditableWarning
           />
           {error && (
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-400 text-sm font-medium">{error}</span>
