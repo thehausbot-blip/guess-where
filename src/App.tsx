@@ -108,6 +108,7 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
   const mapConfig = getMapConfig(mapId);
   const { t } = useI18n();
   const [distUnit, toggleUnit] = useUnitPref();
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
 
   const {
     gameState,
@@ -554,8 +555,18 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
           </div>
         )}
 
+        {/* How to Play button */}
+        <div className="text-center mt-4">
+          <button
+            onClick={() => setShowHowToPlay(true)}
+            className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-blue-200 text-sm border border-white/10 transition-colors"
+          >
+            📖 {t('howTo.title')}
+          </button>
+        </div>
+
         {/* Footer */}
-        <footer className="text-center text-blue-200/40 text-sm mt-8">
+        <footer className="text-center text-blue-200/40 text-sm mt-4">
           <p>{t('footer.madeIn')}</p>
           <p className="mt-1">{t('footer.hausProject')}</p>
           {import.meta.env.DEV && (
@@ -623,6 +634,38 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
       {/* Share modal */}
       {shareText && (
         <ShareModal text={shareText} onClose={() => setShareText(null)} />
+      )}
+
+      {/* How to Play modal */}
+      {showHowToPlay && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] p-4" onClick={() => setShowHowToPlay(false)}>
+          <div className="bg-[#001a45] border border-white/20 rounded-xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-white text-xl font-bold">📖 {t('howTo.title')}</h2>
+              <button onClick={() => setShowHowToPlay(false)} className="text-white/60 hover:text-white text-2xl leading-none">&times;</button>
+            </div>
+            <div className="space-y-3 text-blue-100 text-sm">
+              <div className="bg-white/5 rounded-lg p-3">
+                <h3 className="text-white font-semibold mb-1">🎯 {t('howTo.goal')}</h3>
+                <p>{t('howTo.goalText')}</p>
+              </div>
+              <div className="bg-white/5 rounded-lg p-3">
+                <h3 className="text-white font-semibold mb-1">🗺️ {t('howTo.map')}</h3>
+                <p>{t('howTo.mapText')}</p>
+                <div className="mt-2 space-y-1 text-xs">
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-red-500 inline-block" /> {t('howTo.red')}</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-orange-500 inline-block" /> {t('howTo.orange')}</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-yellow-500 inline-block" /> {t('howTo.yellow')}</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-blue-400 inline-block" /> {t('howTo.blue')}</div>
+                </div>
+              </div>
+              <div className="bg-white/5 rounded-lg p-3">
+                <h3 className="text-white font-semibold mb-1">🏆 {t('howTo.daily')}</h3>
+                <p>{t('howTo.dailyText')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
