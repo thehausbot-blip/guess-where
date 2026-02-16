@@ -29,12 +29,12 @@ export function TierProgress({
   const isChampion = dailyComplete && !dailyGaveUp && tierGuesses.length >= TIER_ORDER.length;
 
   return (
-    <div className="bg-white/10 backdrop-blur rounded-lg p-4 border border-white/10">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-white font-semibold">
+    <div className="bg-white/10 backdrop-blur rounded-lg p-2 sm:p-4 border border-white/10">
+      <div className="flex items-center justify-between mb-1 sm:mb-3">
+        <h3 className="text-white font-semibold text-xs sm:text-base">
           {isChampion ? `🏆 ${t('result.champion')}` : dailyComplete ? `📊 ${t('result.review')}` : `${t('result.reachedTier', { current: String(currentTier + 1), total: String(TIER_ORDER.length) })}`}
         </h3>
-        <span className="text-blue-200 text-sm">
+        <span className="text-blue-200 text-xs sm:text-sm">
           {totalGuesses} {totalGuesses !== 1 ? t('tier.totalGuesses') : t('tier.totalGuess')}
         </span>
       </div>
@@ -51,7 +51,7 @@ export function TierProgress({
             <div
               key={diff}
               className={`
-                flex-1 rounded-md p-2 text-center text-xs font-medium transition-all
+                flex-1 rounded-md p-1 sm:p-2 text-center text-[10px] sm:text-xs font-medium transition-all
                 ${completed ? 'bg-green-600/80 text-white' : ''}
                 ${isCurrent ? 'bg-yellow-500/80 text-white ring-2 ring-yellow-300' : ''}
                 ${failed ? 'bg-red-600/80 text-white' : ''}
@@ -59,8 +59,8 @@ export function TierProgress({
               `}
               title={completed ? `${tierGuesses[idx]} ${t('game.guesses')}` : ''}
             >
-              <div className="text-lg leading-none mb-1">{info.emoji}</div>
-              <div className="truncate">{t(DIFF_I18N_KEYS[diff])}</div>
+              <div className="text-sm sm:text-lg leading-none mb-0.5">{info.emoji}</div>
+              <div className="truncate hidden sm:block">{t(DIFF_I18N_KEYS[diff])}</div>
               {completed && (
                 <div className="text-green-200 mt-0.5">{tierGuesses[idx]}✓</div>
               )}

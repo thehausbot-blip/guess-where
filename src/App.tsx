@@ -61,7 +61,9 @@ function App() {
     window.location.reload();
   };
 
-  if (!currentMapId) {
+  // Show landing page if no map selected, OR if user has no name (even with ?map=)
+  const needsAuth = !playerName;
+  if (!currentMapId || needsAuth) {
     return (
       <LandingPage
         onSelectMap={(mapId) => setCurrentMapId(mapId)}
@@ -74,6 +76,7 @@ function App() {
         isSignedIn={isSignedIn}
         playerName={playerName}
         playerAvatar={playerAvatar}
+        pendingMapId={currentMapId}
       />
     );
   }
@@ -268,37 +271,33 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
 
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <header className="text-center mb-4">
-          <div className="flex items-center justify-between mb-1">
-            <div className="w-24">
-              <button
-                onClick={onBackToLanding}
-                className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-blue-200 text-sm border border-white/10 transition-colors"
-              >
-                ← {t('game.backToMaps')}
-              </button>
-            </div>
-            <h1 className="text-4xl font-bold text-white">
+        <header className="text-center mb-2">
+          <div className="flex items-center justify-between mb-0.5">
+            <button
+              onClick={onBackToLanding}
+              className="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-blue-200 text-xs sm:text-sm border border-white/10 transition-colors shrink-0"
+            >
+              ← {t('game.backToMaps')}
+            </button>
+            <h1 className="text-lg sm:text-2xl md:text-4xl font-bold text-white whitespace-nowrap truncate mx-2">
               {mapConfig.iconUrl ? (
-                <img src={mapConfig.iconUrl} alt={mapConfig.name} className="inline w-10 h-7 object-contain rounded mr-1 align-middle" />
+                <img src={mapConfig.iconUrl} alt={mapConfig.name} className="inline w-6 h-4 sm:w-10 sm:h-7 object-contain rounded mr-1 align-middle" />
               ) : (
                 <>{mapConfig.emoji}{' '}</>
               )}
               <span className="text-red-500">{mapConfig.name}</span> {t('game.guesser')}
             </h1>
-            <div className="w-24 flex justify-end">
-              <ProfileButton
-                playerName={playerName}
-                playerAvatar={playerAvatar}
-                onAvatarChange={saveAvatar}
-                onLogout={onLogout}
-                isSignedIn={isSignedIn}
-                distUnit={distUnit}
-                onToggleUnit={toggleUnit}
-              />
-            </div>
+            <ProfileButton
+              playerName={playerName}
+              playerAvatar={playerAvatar}
+              onAvatarChange={saveAvatar}
+              onLogout={onLogout}
+              isSignedIn={isSignedIn}
+              distUnit={distUnit}
+              onToggleUnit={toggleUnit}
+            />
           </div>
-          <p className="text-blue-200 text-lg">
+          <p className="text-blue-200 text-sm sm:text-lg">
             {t('game.day')} #{dayNumber}
           </p>
         </header>
@@ -329,7 +328,7 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
 
         {/* Daily: Tier Progress (hidden for single-tier maps) */}
         {isDaily && !singleTier && (
-          <div className="mb-4">
+          <div className="mb-2 sm:mb-4">
             <TierProgress
               currentTier={gameState.currentTier}
               tierGuesses={gameState.tierGuesses}

@@ -26,6 +26,7 @@ interface LandingPageProps {
   isSignedIn: boolean;
   playerName: string;
   playerAvatar: string;
+  pendingMapId?: string | null;
 }
 
 function HowToPlayInline({ onBack }: { onBack: () => void }) {
@@ -155,7 +156,7 @@ function GuestSetup({ onSave, onBack }: { onSave: (name: string, avatar: string)
   );
 }
 
-export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmailSignIn, onEmailSignUp, onLogout, isFirebaseConfigured, isSignedIn, playerName, playerAvatar }: LandingPageProps) {
+export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmailSignIn, onEmailSignUp, onLogout, isFirebaseConfigured, isSignedIn, playerName, playerAvatar, pendingMapId }: LandingPageProps) {
   const [page, setPage] = useState<'main' | 'howto' | 'guest'>('main');
   const [welcomeIdx, setWelcomeIdx] = useState(0);
   const [fade, setFade] = useState(true);
@@ -173,6 +174,13 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
   const [showWorldCountries, setShowWorldCountries] = useState(false);
   const [expandedContinent, setExpandedContinent] = useState<string | null>(null);
   const isLoggedIn = isSignedIn || !!playerName;
+
+  // Auto-navigate to pending map when user completes sign-in
+  useEffect(() => {
+    if (pendingMapId && isLoggedIn && playerName) {
+      onSelectMap(pendingMapId);
+    }
+  }, [pendingMapId, isLoggedIn, playerName]);
   const featured = FEATURED_MAPS.map(id => MAP_CONFIGS[id]).filter(Boolean);
   const mapsByRegion = getMapsByRegion();
   const regionOrder = Object.entries(REGIONS).sort((a, b) => a[1].order - b[1].order);
@@ -211,7 +219,7 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
   if (page === 'guest') {
     return (
       <div className="min-h-screen py-8 px-4 flex items-center justify-center">
-        <GuestSetup onSave={(name, avatar) => { onGuestLogin(name, avatar); setPage('main'); }} onBack={() => setPage('main')} />
+        <GuestSetup onSave={(name, avatar) => { onGuestLogin(name, avatar); if (pendingMapId) { onSelectMap(pendingMapId); } else { setPage('main'); } }} onBack={() => setPage('main')} />
       </div>
     );
   }
