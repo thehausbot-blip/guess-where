@@ -559,18 +559,20 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
         <footer className="text-center text-blue-200/40 text-sm mt-8">
           <p>{t('footer.madeIn')}</p>
           <p className="mt-1">{t('footer.hausProject')}</p>
+          {import.meta.env.DEV && (
           <div className="mt-4 flex items-center justify-center gap-2">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={debugMode} onChange={(e) => setDebugMode(e.target.checked)} className="w-4 h-4 rounded" />
               <span className={debugMode ? 'text-purple-400' : 'text-slate-500'}>🧪 {t('game.debug')}</span>
             </label>
           </div>
-          {debugMode && gameState.mysteryCity && (
+          )}
+          {import.meta.env.DEV && debugMode && gameState.mysteryCity && (
             <p className="text-purple-400 text-xs mt-1">
               🎯 {gameState.mysteryCity.name} ({t('game.pop')}: {gameState.mysteryCity.population.toLocaleString()})
             </p>
           )}
-          {debugMode && (
+          {import.meta.env.DEV && debugMode && (
             <div className="mt-2 flex flex-wrap justify-center gap-2">
               <button
                 onClick={() => {
