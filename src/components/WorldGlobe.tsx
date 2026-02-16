@@ -146,21 +146,22 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
   const polygonColor = useCallback((feat: object) => {
     const f = feat as CountryFeature;
     const iso = getCountryIso(f);
-    if (!iso) return 'rgba(180,190,210,0.4)';
+    if (!iso) return 'rgba(0,0,0,0)';
 
     // Target found
-    if (targetFound && iso === targetCountryIso) return 'rgba(34, 197, 94, 0.9)';
+    if (targetFound && iso === targetCountryIso) return 'rgba(34, 197, 94, 0.85)';
 
     const guess = guessMap.get(iso);
     if (guess) {
       const hex = getWorldColorHex(guess.color);
-      return hex + 'dd';
+      return hex + 'bb';
     }
-    return 'rgba(200,210,230,0.35)';
+    // Transparent so topo texture shows through
+    return 'rgba(0,0,0,0)';
   }, [guessMap, targetFound, targetCountryIso, getCountryIso]);
 
-  const polygonSideColor = useCallback(() => 'rgba(150,160,190,0.1)', []);
-  const polygonStrokeColor = useCallback(() => 'rgba(255,255,255,0.25)', []);
+  const polygonSideColor = useCallback(() => 'rgba(0,0,0,0)', []);
+  const polygonStrokeColor = useCallback(() => 'rgba(255,255,255,0.3)', []);
 
   const polygonLabel = useCallback((feat: object) => {
     const f = feat as CountryFeature;
@@ -182,7 +183,7 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
           ref={globeRef}
           width={dimensions.width}
           height={dimensions.height}
-          globeImageUrl="//unpkg.com/three-globe/example/img/earth-water.png"
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
           backgroundColor="rgba(0,0,0,0)"
           showGlobe={true}
           showAtmosphere={true}

@@ -130,6 +130,7 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
 
   const guessedIsos = new Set(gameState.guesses.map(g => g.country.iso));
   const won = gameState.isComplete && !gameState.gaveUp;
+  const isDaily = gameState.mode === 'daily';
 
   return (
     <div className="min-h-screen py-4 px-4">
@@ -138,16 +139,46 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
         <header className="text-center mb-2">
           <div className="flex items-center justify-between mb-0.5">
             <button onClick={onBackToLanding} className="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-blue-200 text-xs sm:text-sm border border-white/10 transition-colors shrink-0">
-              ← Back
+              ← Maps
             </button>
             <h1 className="text-lg sm:text-2xl md:text-4xl font-bold text-white whitespace-nowrap truncate mx-2">
               🌍 <span className="text-red-500">World</span> Guesser
             </h1>
             <div className="w-16" />
           </div>
-          <p className="text-blue-200 text-sm sm:text-lg">Day #{dayNumber}</p>
-          <p className="text-blue-200/50 text-xs">{gameState.guesses.length > 0 ? `${gameState.guesses.length} guess${gameState.guesses.length !== 1 ? 'es' : ''}` : 'Guess the mystery country!'}</p>
+          {isDaily && <p className="text-blue-200 text-sm sm:text-lg">Day #{dayNumber}</p>}
         </header>
+
+        {/* Mode toggle */}
+        <div className="flex justify-center gap-2 mb-3">
+          <button
+            onClick={() => { if (!isDaily) { window.location.reload(); } }}
+            className={`px-4 py-2 rounded-lg font-medium text-sm border transition-colors ${
+              isDaily ? 'bg-yellow-600 border-yellow-500 text-white' : 'bg-white/10 border-white/20 text-blue-200 hover:bg-white/20'
+            }`}
+          >
+            🏆 Daily Challenge
+          </button>
+          <button
+            onClick={() => { if (isDaily) newGame(); }}
+            className={`px-4 py-2 rounded-lg font-medium text-sm border transition-colors ${
+              !isDaily ? 'bg-red-600 border-red-500 text-white' : 'bg-white/10 border-white/20 text-blue-200 hover:bg-white/20'
+            }`}
+          >
+            🎲 Free Play
+          </button>
+        </div>
+
+        {/* Daily status bar */}
+        {isDaily && !gameState.isComplete && (
+          <div className="text-center mb-2">
+            <p className="text-blue-200/60 text-xs">
+              {gameState.guesses.length > 0
+                ? `${gameState.guesses.length} guess${gameState.guesses.length !== 1 ? 'es' : ''} so far`
+                : 'Guess the mystery country! 🌍'}
+            </p>
+          </div>
+        )}
 
         {/* Globe */}
         <div className="mb-4">
@@ -160,29 +191,38 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
 
         {/* Complete state */}
         {gameState.isComplete && (
-          <div className={`mb-6 p-4 rounded-lg text-center ${won ? 'bg-green-900/50 border border-green-500' : 'bg-red-900/50 border border-red-500'}`}>
+          <div className={`mb-6 p-4 rounded-xl text-center ${won ? 'bg-green-900/50 border border-green-500' : 'bg-red-900/50 border border-red-500'}`}>
             {won ? (
               <>
                 <p className="text-3xl mb-2">🎉 You got it!</p>
-                <p className="text-white">
-                  {gameState.target?.emoji} <strong>{gameState.target?.name}</strong> in {gameState.guesses.length} {gameState.guesses.length === 1 ? 'guess' : 'guesses'}!
+                <p className="text-white text-lg">
+                  {gameState.target?.emoji} <strong>{gameState.target?.name}</strong>
+                </p>
+                <p className="text-blue-200/70 text-sm mt-1">
+                  {gameState.guesses.length} {gameState.guesses.length === 1 ? 'guess' : 'guesses'}
                 </p>
               </>
             ) : (
               <>
                 <p className="text-2xl mb-2">😔 Game Over</p>
-                <p className="text-white">
+                <p className="text-white text-lg">
                   The answer was {gameState.target?.emoji} <strong>{gameState.target?.name}</strong>
                 </p>
               </>
             )}
             <div className="flex gap-3 justify-center mt-4 flex-wrap">
-              <button onClick={() => setShareText(generateShareText())} className="px-6 py-2 bg-white hover:bg-gray-100 text-blue-900 rounded-lg font-medium">
+              <button onClick={() => setShareText(generateShareText())} className="px-6 py-2 bg-white hover:bg-gray-100 text-blue-900 rounded-lg font-medium transition-colors">
                 📤 Share
               </button>
-              <button onClick={newGame} className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg font-medium">
-                🔄 New Game
-              </button>
+              {isDaily ? (
+                <button onClick={newGame} className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg font-medium transition-colors">
+                  🎲 Free Play
+                </button>
+              ) : (
+                <button onClick={newGame} className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg font-medium transition-colors">
+                  🔄 New Game
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -192,7 +232,7 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
           <div className="mb-6">
             <WorldGuessInput onGuess={makeGuess} disabled={gameState.isComplete} guessedIsos={guessedIsos} />
             <div className="flex items-center justify-center gap-4 mt-3">
-              <button onClick={giveUp} className="px-3 py-1.5 text-sm bg-white/10 hover:bg-white/20 text-white rounded font-medium border border-white/20">
+              <button onClick={giveUp} className="px-3 py-1.5 text-sm bg-white/10 hover:bg-white/20 text-white rounded font-medium border border-white/20 transition-colors">
                 🏳️ Give Up
               </button>
             </div>
@@ -202,7 +242,7 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
         {/* Guess list */}
         {gameState.guesses.length > 0 && (
           <div className="mb-6">
-            <h2 className="text-white font-semibold text-lg mb-3">Your Guesses ({gameState.guesses.length})</h2>
+            <h2 className="text-white font-semibold text-lg mb-3">Guesses ({gameState.guesses.length})</h2>
             <div className="space-y-2">
               {gameState.guesses.map(guess => (
                 <GuessRow key={guess.country.iso} guess={guess} />
@@ -210,6 +250,33 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
             </div>
           </div>
         )}
+
+        {/* How to Play */}
+        <div className="text-center mt-4 mb-2">
+          <details className="inline-block text-left max-w-md w-full">
+            <summary className="cursor-pointer text-blue-200/50 hover:text-blue-200 text-sm text-center transition-colors">
+              📖 How to Play
+            </summary>
+            <div className="mt-3 space-y-2 text-blue-100 text-sm">
+              <div className="bg-white/5 rounded-lg p-3">
+                <p><strong>🎯 Goal:</strong> Guess the mystery country!</p>
+              </div>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p><strong>🧭 Arrows:</strong> Each guess shows a directional arrow pointing toward the target.</p>
+                <p className="text-xs text-blue-200/60 mt-1">⬆️N ↗️NE ➡️E ↘️SE ⬇️S ↙️SW ⬅️W ↖️NW</p>
+              </div>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p><strong>🌈 Colors:</strong> Distance from the target:</p>
+                <div className="mt-1 space-y-1 text-xs">
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-red-500 inline-block" /> &lt; 1,000 km (hot!)</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-orange-500 inline-block" /> &lt; 3,000 km</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-yellow-500 inline-block" /> &lt; 6,000 km</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded bg-blue-500 inline-block" /> &gt; 6,000 km (cold)</div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
 
         {/* Footer */}
         <footer className="text-center text-blue-200/40 text-sm mt-4">
