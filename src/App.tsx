@@ -53,14 +53,12 @@ function App() {
   const handleLogout = () => {
     // Sign out of Firebase if signed in
     if (isSignedIn) signOutUser();
-    // Clear all player and daily state from localStorage
+    // Clear ALL game state from localStorage
     const keysToRemove = Object.keys(localStorage).filter(k =>
       k.startsWith('guesser-') ||
-      k.endsWith('-daily') ||
-      k.endsWith('-daily-review') ||
-      k.endsWith('-daily-salt') ||
-      k.endsWith('-leaderboard') ||
-      k.endsWith('-guesser')
+      k.includes('-guesser') ||
+      k.includes('-daily') ||
+      k.includes('-leaderboard')
     );
     keysToRemove.forEach(k => localStorage.removeItem(k));
     // Go back to landing
