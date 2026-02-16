@@ -5,6 +5,7 @@ import { fuzzyMatchCountries, type WorldCountry } from '../worldGameData';
 import { getDayNumber } from '../utils';
 import { useUnitPref } from '../hooks/useUnitPref';
 import { ShareModal } from './ShareModal';
+import { useLeaderboard } from '../hooks/useLeaderboard';
 
 interface WorldGameViewProps {
   onBackToLanding: () => void;
@@ -126,14 +127,34 @@ function GuessRow({ guess, unit }: { guess: WorldGuess; unit: 'mi' | 'km' }) {
 }
 
 export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
-  const { gameState, makeGuess, giveUp, newGame, generateShareText } = useWorldGame();
+  const { gameState, makeGuess, giveUp, newGame, generateShareText, getStats, recordGame } = useWorldGame();
   const [shareText, setShareText] = useState<string | null>(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [recorded, setRecorded] = useState(false);
   const dayNumber = getDayNumber();
 
+  const leaderboard = useLeaderboard('world-countries-guesser');
   const [distUnit, toggleUnit] = useUnitPref();
   const guessedIsos = new Set(gameState.guesses.map(g => g.country.iso));
   const won = gameState.isComplete && !gameState.gaveUp;
   const isDaily = gameState.mode === 'daily';
+  const stats = getStats();
+  const avgGuesses = stats.gamesPlayed > 0 ? (stats.totalGuesses / stats.gamesPlayed).toFixed(1) : '—';
+
+  // Record game completion
+  useEffect(() => {
+    if (gameState.isComplete && !recorded) {
+      recordGame(gameState.guesses.length, !gameState.gaveUp);
+      if (isDaily) {
+        leaderboard.addEntry({
+          highestTier: gameState.gaveUp ? 0 : 1,
+          totalGuesses: gameState.guesses.length,
+          tierGuesses: [gameState.guesses.length],
+        });
+      }
+      setRecorded(true);
+    }
+  }, [gameState.isComplete, recorded, gameState.guesses.length, gameState.gaveUp, isDaily, recordGame, leaderboard]);
 
   return (
     <div className="min-h-screen py-4 px-4">
@@ -189,12 +210,38 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
         )}
 
         {/* Globe */}
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <WorldGlobe
             guesses={gameState.guesses}
             targetFound={won}
             targetCountryIso={gameState.target?.iso}
           />
+          {/* Guess overlay toggle */}
+          {gameState.guesses.length > 0 && (
+            <button
+              onClick={() => setShowOverlay(!showOverlay)}
+              className="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-[#001a45]/90 border border-white/20 text-white text-sm font-medium backdrop-blur-sm hover:bg-[#002868] transition-colors z-10"
+            >
+              📋 {gameState.guesses.length}
+            </button>
+          )}
+          {/* Guess overlay panel */}
+          {showOverlay && gameState.guesses.length > 0 && (
+            <div className="absolute bottom-12 right-3 w-72 max-h-64 overflow-y-auto bg-[#001a45]/95 border border-white/20 rounded-xl shadow-2xl backdrop-blur-sm z-20 p-2">
+              <div className="space-y-1">
+                {gameState.guesses.map(guess => (
+                  <div key={guess.country.iso} className="flex items-center gap-2 px-2 py-1 rounded text-sm" style={{ backgroundColor: getWorldColorHex(guess.color) + '33' }}>
+                    <span>{guess.country.emoji}</span>
+                    <span className="text-white flex-1 truncate">{guess.country.name}</span>
+                    <span className="text-blue-200/70 text-xs font-mono">
+                      {distUnit === 'mi' ? Math.round(guess.distance * 0.621371).toLocaleString() : guess.distance.toLocaleString()} {distUnit}
+                    </span>
+                    <span>{guess.direction}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Complete state */}
@@ -209,12 +256,18 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
                 <p className="text-blue-200/70 text-sm mt-1">
                   {gameState.guesses.length} {gameState.guesses.length === 1 ? 'guess' : 'guesses'}
                 </p>
+                <p className="text-blue-200/50 text-xs mt-1">
+                  📊 Your average: {avgGuesses} guesses · {stats.wins}/{stats.gamesPlayed} wins
+                </p>
               </>
             ) : (
               <>
                 <p className="text-2xl mb-2">😔 Game Over</p>
                 <p className="text-white text-lg">
                   The answer was {gameState.target?.emoji} <strong>{gameState.target?.name}</strong>
+                </p>
+                <p className="text-blue-200/50 text-xs mt-2">
+                  📊 Your average: {avgGuesses} guesses · {stats.wins}/{stats.gamesPlayed} wins
                 </p>
               </>
             )}
@@ -255,6 +308,34 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
               {gameState.guesses.map(guess => (
                 <GuessRow key={guess.country.iso} guess={guess} unit={distUnit} />
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Leaderboard */}
+        {isDaily && leaderboard.todayEntries.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-white font-semibold text-lg mb-3">🏆 Leaderboard</h2>
+            <div className="space-y-2">
+              {leaderboard.todayEntries.map((entry, i) => {
+                const isCurrentPlayer = entry.playerName === leaderboard.playerName;
+                return (
+                  <div
+                    key={`${entry.playerName}-${entry.timestamp}`}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-lg border ${
+                      isCurrentPlayer ? 'border-yellow-500/50 bg-yellow-900/20' : 'border-white/10 bg-white/5'
+                    }`}
+                  >
+                    <span className="text-white font-bold w-8">{i + 1}.</span>
+                    <span className="text-xl">{entry.playerAvatar}</span>
+                    <span className="text-white font-medium flex-1">{entry.playerName || 'Anonymous'}</span>
+                    <span className={`text-sm font-medium ${entry.highestTier > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      {entry.highestTier > 0 ? '✅' : '❌'}
+                    </span>
+                    <span className="text-blue-200 text-sm">{entry.totalGuesses} guesses</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

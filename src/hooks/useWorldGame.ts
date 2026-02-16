@@ -181,14 +181,34 @@ export function useWorldGame() {
   const generateShareText = useCallback((): string => {
     const { guesses, gaveUp: gave } = gameState;
     const dayNum = getDayNumber();
-    const arrows = [...guesses].reverse().map(g => g.direction).join('');
+    const colorToEmoji: Record<string, string> = {
+      correct: '🟩', hot: '🟥', warm: '🟧', medium: '🟨', cool: '🟦',
+    };
+    const colorSquares = [...guesses].reverse().map(g => colorToEmoji[g.color] || '⬜').join('');
 
     if (gave) {
-      return `🌍 World Guesser — Daily #${dayNum}\nGave up after ${guesses.length} guesses\n${arrows}\nThink you can do better?\n👉 https://guess-where.app?map=world-countries`;
+      return `🌍 World Guesser — Daily #${dayNum}\n\nGave up after ${guesses.length} guesses\n${colorSquares}\n\nThink you can do better?\n👉 https://guess-where.app?map=world-countries`;
     }
     const reaction = guesses.length === 1 ? '🤯' : guesses.length <= 3 ? '🔥' : guesses.length <= 5 ? '💪' : guesses.length <= 10 ? '👍' : '😅';
-    return `🌍 World Guesser — Daily #${dayNum}\nGot it in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'}! ${reaction}\n${arrows}\nCan you beat my score?\n👉 https://guess-where.app?map=world-countries`;
+    return `🌍 World Guesser — Daily #${dayNum}\n\nGot it in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'}! ${reaction}\n${colorSquares}\n\nCan you beat my score?\n👉 https://guess-where.app?map=world-countries`;
   }, [gameState]);
 
-  return { gameState, makeGuess, giveUp, newGame, generateShareText };
+  // Stats tracking
+  const statsKey = 'world-countries-stats';
+  const getStats = useCallback((): { gamesPlayed: number; totalGuesses: number; wins: number } => {
+    try {
+      const saved = localStorage.getItem(statsKey);
+      return saved ? JSON.parse(saved) : { gamesPlayed: 0, totalGuesses: 0, wins: 0 };
+    } catch { return { gamesPlayed: 0, totalGuesses: 0, wins: 0 }; }
+  }, []);
+
+  const recordGame = useCallback((guessCount: number, won: boolean) => {
+    const stats = getStats();
+    stats.gamesPlayed += 1;
+    stats.totalGuesses += guessCount;
+    if (won) stats.wins += 1;
+    localStorage.setItem(statsKey, JSON.stringify(stats));
+  }, [getStats]);
+
+  return { gameState, makeGuess, giveUp, newGame, generateShareText, getStats, recordGame };
 }
