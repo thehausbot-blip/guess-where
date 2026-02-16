@@ -217,7 +217,7 @@ function getPlayLink(mapId?: string): string {
 export function generateShareText(
   guesses: { color: GuessColor }[],
   dayNumber: number,
-  difficulty: Difficulty,
+  _difficulty: Difficulty,
   mapName: string,
   gaveUp?: boolean,
   mapEmoji?: string,
