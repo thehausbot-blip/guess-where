@@ -53,9 +53,16 @@ function App() {
   const handleLogout = () => {
     // Sign out of Firebase if signed in
     if (isSignedIn) signOutUser();
-    // Clear local player data
-    localStorage.removeItem('guesser-player-name');
-    localStorage.removeItem('guesser-player-avatar');
+    // Clear all player and daily state from localStorage
+    const keysToRemove = Object.keys(localStorage).filter(k =>
+      k.startsWith('guesser-') ||
+      k.endsWith('-daily') ||
+      k.endsWith('-daily-review') ||
+      k.endsWith('-daily-salt') ||
+      k.endsWith('-leaderboard') ||
+      k.endsWith('-guesser')
+    );
+    keysToRemove.forEach(k => localStorage.removeItem(k));
     // Go back to landing
     setCurrentMapId(null);
     window.location.reload();
