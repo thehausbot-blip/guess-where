@@ -73,13 +73,12 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
     return map;
   }, [guesses]);
 
-  // Auto-rotate
+  // Disable auto-rotate
   useEffect(() => {
     if (globeRef.current) {
       const controls = globeRef.current.controls();
       if (controls) {
-        (controls as unknown as { autoRotate: boolean; autoRotateSpeed: number }).autoRotate = true;
-        (controls as unknown as { autoRotateSpeed: number }).autoRotateSpeed = 0.5;
+        (controls as unknown as { autoRotate: boolean }).autoRotate = false;
       }
     }
   }, [countries]);
@@ -147,21 +146,21 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
   const polygonColor = useCallback((feat: object) => {
     const f = feat as CountryFeature;
     const iso = getCountryIso(f);
-    if (!iso) return 'rgba(100,100,100,0.3)';
+    if (!iso) return 'rgba(180,190,210,0.4)';
 
     // Target found
-    if (targetFound && iso === targetCountryIso) return 'rgba(34, 197, 94, 0.8)';
+    if (targetFound && iso === targetCountryIso) return 'rgba(34, 197, 94, 0.9)';
 
     const guess = guessMap.get(iso);
     if (guess) {
       const hex = getWorldColorHex(guess.color);
-      return hex + 'cc';
+      return hex + 'dd';
     }
-    return 'rgba(100,100,140,0.15)';
+    return 'rgba(200,210,230,0.35)';
   }, [guessMap, targetFound, targetCountryIso, getCountryIso]);
 
-  const polygonSideColor = useCallback(() => 'rgba(100,100,140,0.05)', []);
-  const polygonStrokeColor = useCallback(() => 'rgba(200,200,255,0.15)', []);
+  const polygonSideColor = useCallback(() => 'rgba(150,160,190,0.1)', []);
+  const polygonStrokeColor = useCallback(() => 'rgba(255,255,255,0.25)', []);
 
   const polygonLabel = useCallback((feat: object) => {
     const f = feat as CountryFeature;
@@ -183,12 +182,12 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
           ref={globeRef}
           width={dimensions.width}
           height={dimensions.height}
-          globeImageUrl=""
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-water.png"
           backgroundColor="rgba(0,0,0,0)"
           showGlobe={true}
           showAtmosphere={true}
-          atmosphereColor="#3b82f6"
-          atmosphereAltitude={0.2}
+          atmosphereColor="#6bb3ff"
+          atmosphereAltitude={0.25}
           polygonsData={countries}
           polygonCapColor={polygonColor}
           polygonSideColor={polygonSideColor}
