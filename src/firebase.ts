@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAnalytics, isSupported } from 'firebase/analytics';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile as updateFirebaseProfile, type User } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -17,6 +18,11 @@ const isConfigured = !!firebaseConfig.apiKey && !!firebaseConfig.projectId;
 const app = isConfigured ? initializeApp(firebaseConfig) : null;
 const auth = app ? getAuth(app) : null;
 const db = app ? getFirestore(app) : null;
+
+// Initialize Analytics (only in browser, only if supported)
+if (app) {
+  isSupported().then(yes => { if (yes) getAnalytics(app); });
+}
 const googleProvider = new GoogleAuthProvider();
 
 export { auth, db, isConfigured };
