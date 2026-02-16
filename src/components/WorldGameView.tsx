@@ -72,7 +72,7 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
         <div className="relative flex-1">
           <input
             ref={inputRef}
-            type="text"
+            type="search"
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
