@@ -183,7 +183,7 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
           ref={globeRef}
           width={dimensions.width}
           height={dimensions.height}
-          globeImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
           backgroundColor="rgba(0,0,0,0)"
           showGlobe={true}
           showAtmosphere={true}
