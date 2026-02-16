@@ -76,6 +76,13 @@ function WorldGuessInput({ onGuess, disabled, guessedIsos }: {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
+            onFocus={(e) => {
+              const el = e.target;
+              setTimeout(() => {
+                el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                window.scrollTo({ top: Math.min(window.scrollY, el.getBoundingClientRect().top + window.scrollY - 60), behavior: 'smooth' });
+              }, 350);
+            }}
             placeholder={t('game.enterCity')}
             disabled={disabled}
             autoComplete="off"
