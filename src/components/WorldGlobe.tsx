@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Globe, { type GlobeMethods } from 'react-globe.gl';
 import type { WorldGuess } from '../hooks/useWorldGame';
-import { getWorldColorHex } from '../hooks/useWorldGame';
 
 interface WorldGlobeProps {
   guesses: WorldGuess[];
