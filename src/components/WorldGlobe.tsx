@@ -138,7 +138,12 @@ export function WorldGlobe({ guesses, targetFound, targetCountryIso }: WorldGlob
     if (feat.properties.ISO_A2 && feat.properties.ISO_A2 !== '-99') return feat.properties.ISO_A2;
     // Use numeric id
     const id = (feat as unknown as { id: string }).id;
-    if (id && isoNumericMap.has(id)) return isoNumericMap.get(id)!;
+    if (id) {
+      // Try as-is first, then strip leading zeros (world-atlas uses "076", lookup has "76")
+      if (isoNumericMap.has(id)) return isoNumericMap.get(id)!;
+      const stripped = String(parseInt(id, 10));
+      if (isoNumericMap.has(stripped)) return isoNumericMap.get(stripped)!;
+    }
     return '';
   }, [isoNumericMap]);
 
