@@ -353,6 +353,9 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
               dailyComplete={gameState.dailyComplete}
               dailyGaveUp={gameState.dailyGaveUp}
               currentGuesses={gameState.guesses.length}
+              tierDescription={!gameState.dailyComplete ? tierLabels[dailyTiers[gameState.currentTier]]?.description : undefined}
+              tierCityCount={!gameState.dailyComplete ? eligibleCities.length : undefined}
+              entityLabel={entityLabel}
             />
           </div>
         )}
@@ -390,16 +393,7 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
           </div>
         )}
 
-        {/* Current tier info for daily (hidden for single-tier) */}
-        {isDaily && !singleTier && !gameState.dailyComplete && !gameState.showLevelUp && (
-          <div className="text-center mb-3">
-            <span className="text-blue-200 text-sm">
-              {tierLabels[dailyTiers[gameState.currentTier]]?.emoji}{' '}
-              {tierLabels[dailyTiers[gameState.currentTier]]?.description}{' '}
-              • {eligibleCities.length} {entityLabel}
-            </span>
-          </div>
-        )}
+        {/* Current tier info for daily is now shown in TierProgress header */}
 
         {/* Map with guess overlay */}
         <div className="mb-6 relative">

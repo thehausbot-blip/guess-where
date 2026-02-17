@@ -8,6 +8,9 @@ interface TierProgressProps {
   dailyComplete: boolean;
   dailyGaveUp: boolean;
   currentGuesses: number;
+  tierDescription?: string;
+  tierCityCount?: number;
+  entityLabel?: string;
 }
 
 const DIFF_I18N_KEYS: Record<string, string> = {
@@ -23,7 +26,10 @@ export function TierProgress({
   totalGuesses, 
   dailyComplete, 
   dailyGaveUp,
-  currentGuesses
+  currentGuesses,
+  tierDescription,
+  tierCityCount,
+  entityLabel
 }: TierProgressProps) {
   const { t } = useI18n();
   const isChampion = dailyComplete && !dailyGaveUp && tierGuesses.length >= TIER_ORDER.length;
@@ -32,7 +38,14 @@ export function TierProgress({
     <div className="bg-white/10 backdrop-blur rounded-lg p-2 sm:p-4 border border-white/10">
       <div className="flex items-center justify-between mb-1 sm:mb-3">
         <h3 className="text-white font-semibold text-xs sm:text-base">
-          {isChampion ? `🏆 ${t('result.champion')}` : dailyComplete ? `📊 ${t('result.review')}` : `${t('result.reachedTier', { current: String(currentTier + 1) })}`}
+          {isChampion ? `🏆 ${t('result.champion')}` : dailyComplete ? `📊 ${t('result.review')}` : (
+            <span>
+              {t('result.reachedTier', { current: String(currentTier + 1) })}
+              {tierDescription && (
+                <span className="text-blue-200 font-normal"> — {tierDescription} · {tierCityCount} {entityLabel}</span>
+              )}
+            </span>
+          )}
         </h3>
         <span className="text-blue-200 text-xs sm:text-sm">
           {totalGuesses} {totalGuesses !== 1 ? t('tier.totalGuesses') : t('tier.totalGuess')}
