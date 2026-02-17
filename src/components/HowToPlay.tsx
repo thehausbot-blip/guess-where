@@ -38,8 +38,20 @@ export function HowToPlay({ mapConfig, onDismiss, onPractice }: HowToPlayProps) 
             </div>
 
             <div className="bg-white/5 rounded-lg p-3">
+              <h3 className="text-white font-semibold mb-1">📊 Difficulty & Population Bands</h3>
+              <p className="mb-2">The daily challenge has 4 levels. Each level targets cities in a population range. You can guess any city — but only cities in the current band are the mystery target.</p>
+              <div className="space-y-1 text-xs">
+                <div className="flex items-center gap-2">⭐ <strong>Level 1 (Very Easy)</strong> — Population 100,000+ (varies by map)</div>
+                <div className="flex items-center gap-2">🟢 <strong>Level 2 (Easy)</strong> — Population 25,000+</div>
+                <div className="flex items-center gap-2">🟠 <strong>Level 3 (Hard)</strong> — Population 1,000+</div>
+                <div className="flex items-center gap-2">🧠 <strong>Level 4 (Insane)</strong> — All cities, any population</div>
+              </div>
+              <p className="mt-2 text-xs text-blue-200/70">If you guess a city outside the current band, it shows in gray on the map — still useful for narrowing down the area!</p>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-3">
               <h3 className="text-white font-semibold mb-1">🏆 Daily Challenge</h3>
-              <p>A new challenge every day! Start at <strong>Very Easy</strong> (big cities) and work your way up through 6 difficulty tiers. Each correct guess advances you to harder cities. How far can you get?</p>
+              <p>A new challenge every day! Start at Level 1 (big cities) and work through all 4 levels. Each correct guess advances you. Complete all 4 to become a Daily Champion!</p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-3">
