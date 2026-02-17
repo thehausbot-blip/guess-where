@@ -32,7 +32,7 @@ export function TierProgress({
     <div className="bg-white/10 backdrop-blur rounded-lg p-2 sm:p-4 border border-white/10">
       <div className="flex items-center justify-between mb-1 sm:mb-3">
         <h3 className="text-white font-semibold text-xs sm:text-base">
-          {isChampion ? `🏆 ${t('result.champion')}` : dailyComplete ? `📊 ${t('result.review')}` : `${t('result.reachedTier', { current: String(currentTier + 1), total: String(TIER_ORDER.length) })}`}
+          {isChampion ? `🏆 ${t('result.champion')}` : dailyComplete ? `📊 ${t('result.review')}` : `${t('result.reachedTier', { current: String(currentTier + 1) })}`}
         </h3>
         <span className="text-blue-200 text-xs sm:text-sm">
           {totalGuesses} {totalGuesses !== 1 ? t('tier.totalGuesses') : t('tier.totalGuess')}
