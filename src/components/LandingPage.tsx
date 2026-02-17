@@ -597,15 +597,55 @@ export function LandingPage({ onSelectMap, onGuestLogin, onGoogleSignIn, onEmail
           </>
         )}
 
-        {/* Actions — always visible */}
-        <div className="space-y-3">
-          <button
-            onClick={() => setPage('howto')}
-            className="w-full px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium border border-white/20 transition-all"
-          >
+        {/* How to Play — inline collapsible */}
+        <details className="bg-white/5 rounded-lg border border-white/10">
+          <summary className="px-4 py-3 text-white font-medium cursor-pointer hover:bg-white/5 transition-colors">
             📖 {t('landing.howToPlay')}
-          </button>
-        </div>
+          </summary>
+          <div className="px-4 pb-4 space-y-3 text-blue-100 text-sm">
+            <div className="bg-white/5 rounded-lg p-3">
+              <h3 className="text-white font-semibold mb-1">🎯 {t('howTo.goal')}</h3>
+              <p>{t('howTo.goalText')}</p>
+            </div>
+            <div className="bg-white/5 rounded-lg p-3">
+              <h3 className="text-white font-semibold mb-1">🗺️ {t('howTo.map')}</h3>
+              <p>{t('howTo.mapText')}</p>
+              <div className="mt-2 space-y-1 text-xs">
+                <div className="flex items-center gap-2"><span className="w-4 h-4 rounded bg-red-500 inline-block" /> <strong>Red</strong> — {t('howTo.red')}</div>
+                <div className="flex items-center gap-2"><span className="w-4 h-4 rounded bg-orange-500 inline-block" /> <strong>Orange</strong> — {t('howTo.orange')}</div>
+                <div className="flex items-center gap-2"><span className="w-4 h-4 rounded bg-yellow-500 inline-block" /> <strong>Yellow</strong> — {t('howTo.yellow')}</div>
+                <div className="flex items-center gap-2"><span className="w-4 h-4 rounded bg-[#CC9966] inline-block" /> <strong>Brown</strong> — {t('howTo.brown')}</div>
+                <div className="flex items-center gap-2"><span className="w-4 h-4 rounded bg-gray-300 inline-block" /> <strong>White</strong> — {t('howTo.white')}</div>
+                <div className="flex items-center gap-2"><span className="w-4 h-4 rounded bg-gray-500 inline-block" /> <strong>Gray</strong> — {t('howTo.gray')}</div>
+                <div className="flex items-center gap-2"><span className="w-4 h-4 rounded bg-green-500 inline-block" /> <strong>Green</strong> — {t('howTo.green')}</div>
+              </div>
+            </div>
+            <div className="bg-white/5 rounded-lg p-3">
+              <h3 className="text-white font-semibold mb-1">📊 {t('howTo.difficulty')}</h3>
+              <p className="mb-2">{t('howTo.difficultyText')}</p>
+              <div className="space-y-1 text-xs">
+                <div className="flex items-center gap-2">⭐ <strong>{t('diff.veryEasy')}</strong> — {t('howTo.bandVeryEasy')}</div>
+                <div className="flex items-center gap-2">🟢 <strong>{t('diff.easy')}</strong> — {t('howTo.bandEasy')}</div>
+                <div className="flex items-center gap-2">🟠 <strong>{t('diff.hard')}</strong> — {t('howTo.bandHard')}</div>
+                <div className="flex items-center gap-2">🧠 <strong>{t('diff.insane')}</strong> — {t('howTo.bandInsane')}</div>
+              </div>
+              <p className="mt-2 text-xs text-blue-200/70">{t('howTo.oobText')}</p>
+            </div>
+            <div className="bg-white/5 rounded-lg p-3">
+              <h3 className="text-white font-semibold mb-1">🏆 {t('howTo.daily')}</h3>
+              <p>{t('howTo.dailyText')}</p>
+            </div>
+            <div className="bg-white/5 rounded-lg p-3">
+              <h3 className="text-white font-semibold mb-1">💡 {t('howTo.tips')}</h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li>{t('howTo.tip1')}</li>
+                <li>{t('howTo.tip2')}</li>
+                <li>{t('howTo.tip3')}</li>
+                <li>{t('howTo.tip4')}</li>
+              </ul>
+            </div>
+          </div>
+        </details>
 
         {/* Footer */}
         <footer className="mt-12 text-blue-200/30 text-sm">
