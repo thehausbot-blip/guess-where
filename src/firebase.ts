@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics, isSupported } from 'firebase/analytics';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile as updateFirebaseProfile, type User } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 
 // TODO: Replace with your Firebase config from console.firebase.google.com
 const firebaseConfig = {
@@ -158,4 +158,40 @@ export async function saveDailyResult(uid: string, mapId: string, result: {
   if (!db) return;
   const ref = doc(db, 'dailyResults', `${mapId}_${result.date}_${uid}`);
   await setDoc(ref, { ...result, uid, mapId, createdAt: serverTimestamp() });
+}
+
+// Leaderboard: fetch all daily results for a map + date
+export async function fetchDailyLeaderboard(mapId: string, date: string): Promise<Array<{
+  displayName: string;
+  avatar: string;
+  highestTier: number;
+  totalGuesses: number;
+  tierGuesses: number[];
+  uid: string;
+}>> {
+  if (!db) return [];
+  try {
+    const q = query(
+      collection(db, 'dailyResults'),
+      where('mapId', '==', mapId),
+      where('date', '==', date),
+      orderBy('highestTier', 'desc'),
+      orderBy('totalGuesses', 'asc')
+    );
+    const snap = await getDocs(q);
+    return snap.docs.map(d => {
+      const data = d.data();
+      return {
+        displayName: data.displayName || 'Anonymous',
+        avatar: data.avatar || '🤠',
+        highestTier: data.highestTier ?? 0,
+        totalGuesses: data.totalGuesses ?? 0,
+        tierGuesses: data.tierGuesses || [],
+        uid: data.uid || '',
+      };
+    });
+  } catch (err) {
+    console.error('Failed to fetch leaderboard:', err);
+    return [];
+  }
 }

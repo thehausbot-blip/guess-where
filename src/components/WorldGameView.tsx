@@ -7,6 +7,7 @@ import { useUnitPref } from '../hooks/useUnitPref';
 import { ShareModal } from './ShareModal';
 import { useLeaderboard } from '../hooks/useLeaderboard';
 import { useI18n } from '../i18n/useI18n';
+import { useAuth } from '../hooks/useAuth';
 
 interface WorldGameViewProps {
   onBackToLanding: () => void;
@@ -146,7 +147,8 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
   const dayNumber = getDayNumber();
 
   const { t } = useI18n();
-  const leaderboard = useLeaderboard('world-countries-guesser');
+  const leaderboard = useLeaderboard('world-countries-guesser', 'world-countries');
+  const { profile } = useAuth();
   const [distUnit, toggleUnit] = useUnitPref();
   const guessedIsos = new Set(gameState.guesses.map(g => g.country.iso));
   const won = gameState.isComplete && !gameState.gaveUp;
@@ -163,7 +165,7 @@ export function WorldGameView({ onBackToLanding }: WorldGameViewProps) {
           highestTier: gameState.gaveUp ? 0 : 1,
           totalGuesses: gameState.guesses.length,
           tierGuesses: [gameState.guesses.length],
-        });
+        }, profile?.uid);
       }
       setRecorded(true);
     }

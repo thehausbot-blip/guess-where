@@ -101,6 +101,7 @@ function App() {
       onBackToLanding={() => setCurrentMapId(null)}
       onLogout={handleLogout}
       isSignedIn={isSignedIn}
+      uid={profile?.uid}
     />
   );
 }
@@ -113,9 +114,10 @@ interface GameViewProps {
   onBackToLanding: () => void;
   onLogout: () => void;
   isSignedIn?: boolean;
+  uid?: string;
 }
 
-function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding, onLogout, isSignedIn }: GameViewProps) {
+function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding, onLogout, isSignedIn, uid }: GameViewProps) {
   const mapConfig = getMapConfig(mapId);
   const { t } = useI18n();
   const [distUnit, toggleUnit] = useUnitPref();
@@ -143,7 +145,7 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
     todayEntries,
     bestEntry,
     addEntry,
-  } = useLeaderboard(mapConfig.storagePrefix);
+  } = useLeaderboard(mapConfig.storagePrefix, mapConfig.id);
 
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [dailyResultSaved, setDailyResultSaved] = useState(false);
@@ -208,7 +210,7 @@ function GameView({ mapId, playerName, playerAvatar, saveAvatar, onBackToLanding
       highestTier: gameState.tierGuesses.length > 0 ? gameState.tierGuesses.length - 1 : 0,
       totalGuesses: gameState.totalGuesses,
       tierGuesses: gameState.tierGuesses,
-    });
+    }, uid);
     setDailyResultSaved(true);
   }
 
